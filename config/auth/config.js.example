@@ -1,0 +1,56 @@
+// TODO - This is secret code for token sign.
+export const JWTSignKey = {
+    secret: 'my-secret-code',
+};
+
+
+export const localClient = {
+    name: 'local',
+    id: 'local',
+    secret: 'local',
+};
+
+export const facebook = {
+    clientID: 'your_facebook_clientID',
+    clientSecret: 'your_facebook_clientSecret',
+    route: '/auth/facebook',
+    callbackURL: '/auth/facebook/callback',
+    profileFields: ['displayName', 'email']
+};
+
+export const twitter = {
+    consumerKey: 'your_twitter_consumerKey',
+    consumerSecret: 'your_twitter_consumerSecret',
+    route: '/auth/twitter',
+    callbackURL: '/auth/twitter/callback'
+}
+
+export const github = {
+    clientID: 'your_github_clientID',
+    clientSecret: 'your_github_clientSecret',
+    route: '/auth/github',
+    callbackURL: "/auth/github/callback"
+}
+
+export const google = {
+    clientID: 'your_google_clientID',
+    clientSecret: 'your_google_clientSecret',
+    route: '/auth/google',
+    callbackURL: '/auth/google/callback'
+}
+
+export const instagram = {
+    clientID: 'your_instagram_clientID',
+    clientSecret: 'your_instagram_clientSecret',
+    route: '/auth/instagram',
+    callbackURL: '/auth/instagram/callback'
+    
+}
+
+export const linkedin = {
+    consumerKey: 'your_linkedin_consumerKey',
+    consumerSecret: 'your_linkedin_consumerSecret',
+    route: '/auth/linkedin',
+    callbackURL: '/auth/linkedin/callback',
+    profileFields: ['id', 'first-name', 'last-name', 'email-address']
+}

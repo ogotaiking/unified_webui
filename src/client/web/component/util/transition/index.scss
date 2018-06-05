@@ -1,0 +1,23 @@
+.loadComponent-appear {
+    opacity: 0;
+}
+.loadComponent-appear.loadComponent-appear-active {
+    opacity: 1;
+    transition: all 0.5s linear;
+}
+.loadComponent-enter {
+    opacity: 0;
+}
+.loadComponent-enter.loadComponent-enter-active {
+    opacity: 1;
+    transition: all 0.5s linear 0.4s;
+}
+.loadComponent-leave {
+    opacity: 1.0;
+    position:absolute
+}
+.loadComponent-leave.loadComponent-leave-active {
+    opacity: 0;
+    transition: all 0.5s linear;
+    position:absolute;
+}

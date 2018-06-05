@@ -1,0 +1,29 @@
+.logo-normal {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    text-align : center;
+    transition: all 0.3s ease;
+
+}
+.logo-collapsed {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    text-align : center;
+    transition: all 0.3s ease;
+}
+.logo-font {
+    font-size : 18px;
+    color: rgba(208, 213, 216, 0.863) !important;
+    &:hover{
+        text-decoration: none;
+    }
+    &:focus{
+        text-decoration: none;
+    }
+    &:visited{
+        text-decoration: none;
+    }
+    &:active{
+        text-decoration: none;
+    }
+}

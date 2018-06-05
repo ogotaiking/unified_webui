@@ -1,0 +1,1 @@
+this folder is used for common containers which could share with React-Web and React-native

@@ -1,0 +1,9 @@
+{
+    "apps" : [{
+      "name"        : "webpack_dev",
+      "script"      : "./node_modules/.bin/webpack-dev-server",
+      "watch"       : true,
+      "cwd"         : ".",
+      "args"        : "--config web_config/webpack.config.js --mode development --env.BUILD_PLATFORM=web"
+    }]
+  }

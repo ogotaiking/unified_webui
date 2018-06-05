@@ -1,0 +1,18 @@
+.Breadcrumb {
+    margin : 16px 0;
+    &:hover{
+        text-decoration: none;
+        color: #555;
+        opacity: 1;
+    }
+    &:focus{
+        color: rgba(35, 101, 245, 0.74);
+        text-decoration: none;
+    }
+    &:visited{
+        text-decoration: none;
+    }
+    &:active{
+        text-decoration: none;
+    }
+}
