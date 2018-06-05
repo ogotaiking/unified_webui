@@ -1,5 +1,6 @@
 行情更新Mutation
 
+```graphql
 mutation {
   UPDATE_STOCK_DATA(stock: [{
     code: "sz300104"
@@ -53,3 +54,4 @@ mutation {
     stockname  
   }
 }
+```
