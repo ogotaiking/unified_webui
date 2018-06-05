@@ -59,7 +59,8 @@ type Mutation {
   UPDATE_STOCK_DATA(stock: [StockType_INPUT!]!): [StockType]
 }
 type Subscription {
-  LISTEN_STOCK(code:[String!]!): StockType!
+  LISTEN_STOCK_DATA: [StockType!]!
+  LISTEN_STOCK_DATA_BY_CODELIST(code:[String!]!): [StockType!]!
 }
 `;
 

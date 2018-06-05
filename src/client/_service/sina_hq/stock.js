@@ -10,8 +10,10 @@ class StockHQ extends React.Component {
         this.fetchData = this.fetchData.bind(this);
     }
     componentDidMount() {
-        this.fetchData();
-        this.interval = setInterval(this.fetchData, parseInt(this.props.interval));     
+        setTimeout( () => {
+            this.fetchData();
+            this.interval = setInterval(this.fetchData, parseInt(this.props.interval));     
+          }, Math.floor(Math.random() * 5000));       
     }
     componentWillUnmount() {
         clearInterval(this.interval);
@@ -20,16 +22,12 @@ class StockHQ extends React.Component {
        // console.log('Fetching...',this.props.interval)
         StockHQFetch(this.props.stocklist).then( 
             data => {
-                console.log("FetchResult:",data);
+                //console.log("-FetchResult:",data);
                 this.props.update_stock({
                     variables: {
                         data
                     }
                 });
-                //TODO : Add code here to send the fetch result to Server again by GraphQL-sub
-                /* this.setState({
-                     data: data
-                });*/
             });   
     }
     render(){        

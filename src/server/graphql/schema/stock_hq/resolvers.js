@@ -9,17 +9,17 @@ const pubsub = new PubSub();
 const CHANNEL = "STOCK_MARKET_DATA";
 let stock_market_data = {};
 
+/*
 pubsub.subscribe(CHANNEL, (payload) => {
   console.log(`New message received on channel ${CHANNEL}`);
   try {
     const stock_data = payload[CHANNEL]; // object wrapped in channel name
-    stock_market_data['sz000001']= stock_data ; 
-    console.log(`Added message to database`);
   } catch (error) {
     console.error(`Error trying to extract new message from payload`);
     console.error(error.message);
   }
 })
+*/
 
 const STOCK_DATA = (root, args, ctx, info) =>{
   //console.log("ARGS",args);
@@ -37,8 +37,9 @@ const UPDATE_STOCK_DATA = (root, { stock }) => {
   stock.map((item)=>{
     let stock_symbol = item.code;
     stock_market_data[stock_symbol] = item;
-    result.push(item)
+    result.push(item);
   });
+  pubsub.publish(CHANNEL,result);
  // const newMessage = { id: String(nextMessageId++), content: message };
  // pubsub.publish(CHANNEL, { messageAdded: newMessage });
   //console.log(stock_market_data);
@@ -53,9 +54,29 @@ const resolvers = {
     UPDATE_STOCK_DATA: UPDATE_STOCK_DATA,
   },
   Subscription: {
-    LISTEN_STOCK: {
+    LISTEN_STOCK_DATA_BY_CODELIST: {
+      resolve: (payload, args, context, info) => {
+        // Manipulate and return the new value
+        
+        //console.log(payload)
+        let result = [];
+        payload.map((item)=>{
+          if (args.code.indexOf(item.code) > -1 ) {
+            result.push(item);
+          } 
+        })
+        //console.log(Math.floor(Math.random() * 3000));
+        //console.log(args.code,result)
+        return result;
+      },
       subscribe: () => pubsub.asyncIterator(CHANNEL),
     },
+    LISTEN_STOCK_DATA: {
+      resolve: (payload, args, context, info) => {
+        return payload;
+      },
+      subscribe: () => pubsub.asyncIterator(CHANNEL),
+    }
   },
 };
 
