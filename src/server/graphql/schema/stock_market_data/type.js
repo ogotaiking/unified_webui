@@ -85,10 +85,8 @@ type Mutation {
   UPDATE_STOCK_INDEX_DATA(stock: [StockIndex_INPUT!]!): [StockIndex_Type]
 }
 type Subscription {
-  LISTEN_STOCK_DATA: [StockType!]!
-  LISTEN_STOCK_DATA_BY_SYMBOL_LIST(symbol_list:[String!]!): [StockType!]!
-  LISTEN_STOCK_INDEX_DATA: [StockIndex_Type!]!
-  LISTEN_STOCK_INDEX_DATA_BY_SYMBOL_LIST(symbol_list:[String!]!): [StockIndex_Type!]!
+  STOCK_DATA(symbol_list:[String!]!): [StockType!]!
+  STOCK_INDEX_DATA(symbol_list:[String!]!): [StockIndex_Type!]!
 }
 `;
 

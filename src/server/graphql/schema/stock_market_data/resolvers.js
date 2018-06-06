@@ -86,8 +86,11 @@ const resolvers = {
     UPDATE_STOCK_INDEX_DATA: UPDATE_STOCK_INDEX_DATA,
   },
   Subscription: {
-    LISTEN_STOCK_DATA_BY_SYMBOL_LIST: {
+    STOCK_DATA: {
       resolve: (payload, args, context, info) => {
+        if (!args.symbol_list) {
+          return payload;
+        }
         let result = [];
         payload.map((item)=>{
           if (args.symbol_list.indexOf(item.symbol) > -1 ) {
@@ -98,14 +101,12 @@ const resolvers = {
       },
       subscribe: () => pubsub.asyncIterator(CHANNEL),
     },
-    LISTEN_STOCK_DATA: {
+
+    STOCK_INDEX_DATA: {
       resolve: (payload, args, context, info) => {
-        return payload;
-      },
-      subscribe: () => pubsub.asyncIterator(CHANNEL),
-    },
-    LISTEN_STOCK_INDEX_DATA_BY_SYMBOL_LIST: {
-      resolve: (payload, args, context, info) => {
+        if (!args.symbol_list) {
+          return payload;
+        }
         let result = [];
         payload.map((item)=>{
           if (args.symbol_list.indexOf(item.symbol) > -1 ) {
@@ -116,12 +117,7 @@ const resolvers = {
       },
       subscribe: () => pubsub.asyncIterator(INDEX_CHANNEL),
     },
-    LISTEN_STOCK_INDEX_DATA: {
-      resolve: (payload, args, context, info) => {
-        return payload;
-      },
-      subscribe: () => pubsub.asyncIterator(INDEX_CHANNEL),
-    }
+ 
   },
 };
 
