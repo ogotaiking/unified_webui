@@ -7,11 +7,32 @@ import ErrorBox from '../../../component/util/errorbox';
 
 
 class StockTable extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            market_data : new Map()
+        };
+    }
+    static getDerivedStateFromProps(nextProp,prevState) {
+        //console.log('DerivedStateFunction:',prevState.market_data.size,nextProp.stockQuery.STOCK_INDEX_DATA);
+        if ( (prevState.market_data.size == 0 ) && (nextProp.stockQuery.STOCK_INDEX_DATA) ) {
+            let result = new Map();
+            nextProp.stockQuery.STOCK_DATA.map((item)=> {
+                result.set(item.symbol,item);
+            });
+            return { market_data: result};
+        } else {
+            return null;
+        }
+    }
+
+
     componentDidMount(){
-        this._subscribeData(this.props.symbol_list.map((item)=>{ return item.split("_")[1];}));
+        this._subscribeData(this.props.symbol_list);
     }
     _DataToRender = () => {
-        return this.props.stockQuery.STOCK_INDEX_DATA;
+        //console.log('Renderfunction called....');
+        return [...this.state.market_data.values()];
     }
 
     _subscribeData = (symbol_list) => {
@@ -19,47 +40,26 @@ class StockTable extends React.Component {
             document: gql`
                 subscription stockIndex($symbol_list: [String!]!){
                     STOCK_DATA(symbol_list: $symbol_list ){
-                      symbol
-                      stockname
-                      currentdate
-                      currenttime
-                      current
-                      lastclose
-                      high
-                      low
-                      volm
-                      voln
-                      buy
-                      sell
+                        symbol
+                        stockname
+                        current
+                        currenttime
+                        pricechange
+                        pctchange
+                        volm
                     }
                 }`,
-                variables: { 
-                    symbol_list 
-                },
-                updateQuery: (previous, { subscriptionData}) => {
-                    //console.log("PREV",previous.STOCK_INDEX_DATA);
-                    //console.log("SubScription",subscriptionData.data.STOCK_INDEX_DATA); 
-
-                    let fetch_result = subscriptionData.data.STOCK_INDEX_DATA;
-                    let result_map = new Map();
-                    previous.STOCK_INDEX_DATA.map((item)=>{
-                        result_map.set(item.symbol,item);
-                    });
-
-                    fetch_result.map((item)=>{
-                        result_map.set(item.symbol,item);
-                    });
-
-                    let result_array = [...result_map.values()];
-                    //console.log(result_array);
-                    let resultData = { 
-                              ...previous,
-                              STOCK_INDEX_DATA: result_array
-                            };
-                    //console.log("RESULT",resultData);
-                return resultData;
+            variables: { 
+                symbol_list 
             },
-      });
+            updateQuery: (previous, { subscriptionData}) => {
+                let item = subscriptionData.data.STOCK_DATA;
+                let result_map = this.state.market_data;
+                result_map.set(item.symbol,item);
+                this.setState({market_data: result_map});
+                //return null;
+            },
+        });
   }
 
   render() {
@@ -89,12 +89,15 @@ class StockTable extends React.Component {
       }, {
         title: '成交金额（万元）',
         dataIndex: 'volm',
+      }, {
+        title: 'Time',
+        dataIndex:'currenttime'
       }];
 
     return (
        <Table rowKey={DataToRender => DataToRender.symbol} 
               dataSource={DataToRender} 
-              columns={columns} size="small" pagination={false} />
+              columns={columns}  pagination={false} />
     );
  }
 }
@@ -104,16 +107,11 @@ query StockQuery($symbol_list:[String!]!){
     STOCK_DATA(symbol_list: $symbol_list){
       symbol
       stockname
-      currentdate
-      currenttime
       current
-      lastclose
-      high
-      low
+      currenttime
+      pricechange
+      pctchange
       volm
-      voln
-      buy
-      sell
     }
   }
 `;

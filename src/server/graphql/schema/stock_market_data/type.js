@@ -87,8 +87,8 @@ type Mutation {
   UPDATE_STOCK_INDEX_DATA(stock: [StockIndex_INPUT!]!): [StockIndex_Type]
 }
 type Subscription {
-  STOCK_DATA(symbol_list:[String!]!): [StockType!]!
-  STOCK_INDEX_DATA(symbol_list:[String!]!): [StockIndex_Type!]!
+  STOCK_DATA(symbol_list:[String!]!): StockType!
+  STOCK_INDEX_DATA(symbol_list:[String!]!): StockIndex_Type!
 }
 `;
 

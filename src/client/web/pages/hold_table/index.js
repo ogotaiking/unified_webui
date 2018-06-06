@@ -2,7 +2,7 @@ import React   from 'react';
 import Content from '../../component/layout/content';
 import StockMarketDataFetchAgent from '../../../_service/sina_market_data/stock';
 import IndexMDFetchAgent from '../../../_service/sina_market_data/stock_index';
-import StockTable from './component/test_sub';
+import StockTable from './component/stock_table';
 import IndexTable from './component/index_table';
 
 class LoginHistory extends React.Component{
@@ -16,8 +16,11 @@ class LoginHistory extends React.Component{
                 <Content>
                     
                     <i className="fa fa-signal"/>
-                    <IndexTable symbol_list={china_index}/>
+                    <StockTable symbol_list={hqlist2}/>
+                    
                     <span className="glyphicon glyphicon-log-out"/>
+                    <IndexTable symbol_list={china_index}/>
+
                     <StockMarketDataFetchAgent key="stock1" stocklist = {hqlist1} interval={15000}/>
                     <StockMarketDataFetchAgent key="stock2" stocklist = {hqlist2} interval={15000}/>
                     <IndexMDFetchAgent key="china_index" indexlist={china_index}  interval={15000}/>

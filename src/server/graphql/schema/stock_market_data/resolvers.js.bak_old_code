@@ -11,8 +11,21 @@ const INDEX_CHANNEL = "STOCK_MARKET_DATA_INDEX";
 let stock_market_data = {};
 let stock_market_data_index = {};
 
+/* EXMAPLE for Local Subscribe to backend.
+pubsub.subscribe(CHANNEL, (payload) => {
+  console.log(`New message received on channel ${CHANNEL}`);
+  try {
+    const stock_data = payload[CHANNEL]; // object wrapped in channel name
+  } catch (error) {
+    console.error(`Error trying to extract new message from payload`);
+    console.error(error.message);
+  }
+})
+*/
+
+
 function convert_date(stock) {
-  return Date.parse(stock.currentdate+ " " + stock.currenttime);
+  return Date.parse(stock.currentdate+ " " + stock.currenttime)
 }
 
 const STOCK_DATA = (root, args, ctx, info) =>{
@@ -39,22 +52,30 @@ const STOCK_INDEX_DATA = (root, args, ctx, info) =>{
 
 const UPDATE_STOCK_DATA = (root, { stock }) => {
   //console.log({stock});
-  return stock.map((item)=>{
+  let result =[];
+  stock.map((item)=>{
     let stock_symbol = item.symbol;
     item.pricechange = (item.current - item.lastclose).toFixed(3);
     item.pctchange = (item.pricechange / item.lastclose).toFixed(3);
     stock_market_data[stock_symbol] = item;
-    pubsub.publish(INDEX_CHANNEL+"_"+stock_symbol,item);
+    result.push(item);
   });
-  };
+  pubsub.publish(CHANNEL,result);
+  return result;
+};
 
 
 const UPDATE_STOCK_INDEX_DATA = (root, { stock }) => {
-  return stock.map((item)=>{
+  //console.log({stock});
+  let result =[];
+  stock.map((item)=>{
     let stock_symbol = item.symbol;
     stock_market_data_index[stock_symbol] = item;
     pubsub.publish(INDEX_CHANNEL+"_"+stock_symbol,item);
+    result.push(item);
   });
+  pubsub.publish(INDEX_CHANNEL,result);
+  return result;
 };
 
 
@@ -70,16 +91,41 @@ const resolvers = {
   Subscription: {
     STOCK_DATA: {
       resolve: (payload, args, context, info) => {
-        return payload;
+        if (!args.symbol_list) {
+          return payload;
+        }
+        let result = [];
+        payload.map((item)=>{
+          if (args.symbol_list.indexOf(item.symbol) > -1 ) {
+            result.push(item);
+          } 
+        });
+        return result;
       },
-      subscribe: (root, args, context, info) => pubsub.asyncIterator(args.symbol_list.map((item)=>{ return INDEX_CHANNEL+"_"+item ;})),
+      subscribe: () => pubsub.asyncIterator(CHANNEL),
     },
 
     STOCK_INDEX_DATA: {
       resolve: (payload, args, context, info) => {
         return payload;
+        /*
+        if (!args.symbol_list) {
+          return payload;
+        }
+        let result = [];
+        payload.map((item)=>{
+          if (args.symbol_list.indexOf(item.symbol) > -1 ) {
+            result.push(item);
+          } 
+        });
+        return result;*/
       },
       subscribe: (root, args, context, info) => pubsub.asyncIterator(args.symbol_list.map((item)=>{ return INDEX_CHANNEL+"_"+item ;})),
+      /*
+      subscribe: withFilter(() => pubsub.asyncIterator(INDEX_CHANNEL),(payload, variables) => {
+        console.log(payload,variables)
+          payload.map((item)=>{ return variables.symbol_list.indexOf(item.symbol) ;})
+      })*/
     }
   },
 };
