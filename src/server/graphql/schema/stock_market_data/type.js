@@ -6,6 +6,8 @@ type StockType {
   currentdate: String
   currenttime: String
   current: Float
+  pricechange: Float
+  pctchange: Float
   open: Float
   high: Float
   low: Float

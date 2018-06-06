@@ -51,7 +51,7 @@ class LoginHistory extends React.Component {
     return (
        <Table rowKey={historyLogToRender => historyLogToRender._id} 
               dataSource={historyLogToRender} 
-              columns={columns} />
+              columns={columns} size="small" />
     );
  }
 }

@@ -55,6 +55,8 @@ const UPDATE_STOCK_DATA = (root, { stock }) => {
   let result =[];
   stock.map((item)=>{
     let stock_symbol = item.symbol;
+    item.pricechange = (item.current - item.lastclose).toFixed(3);
+    item.pctchange = (item.pricechange / item.lastclose).toFixed(3);
     stock_market_data[stock_symbol] = item;
     result.push(item);
   });
