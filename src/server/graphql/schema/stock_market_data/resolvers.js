@@ -30,7 +30,13 @@ const STOCK_DATA = (root, args, ctx, info) =>{
     }
   });
   return result_list;
+};
+
+
+function convert_date(stock) {
+  return Date.parse(stock.currentdate+ " " + stock.currenttime)
 }
+
 const UPDATE_STOCK_DATA = (root, { stock }) => {
   //console.log({stock});
   let result =[];
@@ -44,7 +50,7 @@ const UPDATE_STOCK_DATA = (root, { stock }) => {
  // pubsub.publish(CHANNEL, { messageAdded: newMessage });
   //console.log(stock_market_data);
   return result;
-}
+};
 
 const resolvers = {
   Query: {

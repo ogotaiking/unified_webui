@@ -1,10 +1,11 @@
 import React from 'react';
 import {  Layout, Menu,Icon,Modal } from 'antd';
 import {  Redirect,NavLink } from 'react-router-dom';
-import UserMenuConfig from '../../menuconfig/userMenu';
 import HeaderMenuConfig from '../../menuconfig/headerMenu';
 
 import './header.scss';
+
+const UserMenuConfig = HeaderMenuConfig.find((element)=>{return element.key == 'user';});
 
 const { Header } = Layout;
 const SubMenu = Menu.SubMenu;
@@ -19,7 +20,7 @@ class LayoutHeader extends React.Component {
     this.state = {
       redirectToLogout: false,
       headermenujsx : this.MenuConfigToJSX(HeaderMenuConfig,this.props.userpriv,null),
-      usermenujsx : this.MenuConfigToJSX(UserMenuConfig,this.props.userpriv,userparent)
+      usermenujsx : this.MenuConfigToJSX(UserMenuConfig.children,this.props.userpriv,userparent)
     };
     this.LogOutConfirm = this.LogOutConfirm.bind(this);    
   }
@@ -45,6 +46,12 @@ class LayoutHeader extends React.Component {
   MenuConfigToJSX(dataSource,userpriv,parent) {
     return (
       dataSource.map((menu, index) => {
+        //在普通循环中去掉UserMenu的parse，但是对于Usermenu本身，
+        //递归函数的parent不为空，所以可以继续处理
+        if ((menu.key=='user') && (!parent) ){
+          return ;
+        }
+
         //process PrivilegeLevel, if not config set to min(0).
         let privilegeLevel = 0;
         if (menu.priv)
