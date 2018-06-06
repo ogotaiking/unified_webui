@@ -31,6 +31,7 @@ export function StockMarketDataFetch(hq_list, transmit) {
 function f_num(x){
     return Number.parseFloat(x).toFixed(1);
 }
+
 export function StockMarketDataStrParser(hq_str,stocksymbol) {
     /* 行情字段样本 
     var hq_str_sz300104="乐视网,3.620,3.620,3.740,3.900,3.530,3.740,3.750,
@@ -66,5 +67,69 @@ export function StockMarketDataStrParser(hq_str,stocksymbol) {
 
     result.currentdate = e[30]; //当前日期
     result.currenttime = e[31]; //当前时间
+    return result;
+}
+
+/*
+ * 中国指数的获取
+ * "s_sh000001","s_sz399001","s_sz399005","s_sz399006","s_sh000300","s_sh510050"
+ * 
+ * 国际主要指数的获取
+ * "int_dji","int_nasdaq","int_sp500","int_nikkei","int_hangseng","int_ftse"
+ */
+
+export function StockMarketData_IndexFetch(hq_list, transmit) {
+    let hdr = transmit || 'https';
+    let hq_str = hq_list.join(',');
+    let hq_result_array = hq_list.map(element => {
+        return 'hq_str_' + element;
+    });
+    let _fetch_url = hdr + "://hq.sinajs.cn/list=" + hq_str;
+    return new Promise((resolve,reject) =>{
+    $.ajax({
+        url: _fetch_url,
+        dataType: "script",
+        cache: "false",
+        type: "GET",
+        success: (data) => {
+            let result = [];
+            hq_result_array.map(e => {
+                let stocksymbol = e.split("_")[3];
+                result.push(StockMarketData_Index_StrParser(window[e],stocksymbol));
+            });
+            //console.log(result);
+            resolve(result);
+        },
+        error: function (error) {
+            reject(error); 
+        }
+    });
+   });
+}
+
+export function StockMarketData_Index_StrParser(hq_str,symbol) {
+    /* 行情字段样本
+     * var hq_str_s_sh000001="上证指数,3110.4770,-3.7285,-0.12,505434,7046235";
+     * 
+     * var hq_str_int_dji="道琼斯,24799.98,-13.71,-0.06";
+     * var hq_str_int_hangseng="恒生指数,31179.049,85.600,0.280%";
+     * var hq_str_int_nasdaq="纳斯达克,7637.86,31.40,0.41";
+     * var hq_str_int_nikkei="日经指数,22591.11,51.57,0.23";
+     */
+
+    let result = {};
+    let e = hq_str.split(",");
+    result.symbol = symbol;
+    result.stockname = e[0]; //股票or指数名称
+    result.current = parseFloat(e[1]); //当日价格
+    result.pricechange = parseFloat(e[2]); //当日涨跌值
+    result.pctchange = parseFloat(e[3]); //当日涨跌幅%
+    if (e.length > 4) {
+        result.voln =  parseFloat(e[4]); //成交量（手）
+        result.volm = parseFloat(e[5]); //成交金额（万元）
+    } else {
+        result.voln =  0.0;
+        result.volm =  0.0;
+    }
     return result;
 }
