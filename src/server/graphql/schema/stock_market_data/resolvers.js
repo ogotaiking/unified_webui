@@ -35,7 +35,7 @@ const UPDATE_STOCK_DATA = (root, { stock }) => {
   //console.log({stock});
   let result =[];
   stock.map((item)=>{
-    let stock_symbol = item.code;
+    let stock_symbol = item.symbol;
     stock_market_data[stock_symbol] = item;
     result.push(item);
   });
@@ -54,14 +54,14 @@ const resolvers = {
     UPDATE_STOCK_DATA: UPDATE_STOCK_DATA,
   },
   Subscription: {
-    LISTEN_STOCK_DATA_BY_CODELIST: {
+    LISTEN_STOCK_DATA_BY_SYMBOL_LIST: {
       resolve: (payload, args, context, info) => {
         // Manipulate and return the new value
         
         //console.log(payload)
         let result = [];
         payload.map((item)=>{
-          if (args.code.indexOf(item.code) > -1 ) {
+          if (args.symbol_list.indexOf(item.symbol) > -1 ) {
             result.push(item);
           } 
         })

@@ -1,6 +1,6 @@
 import $ from 'jquery'; 
 
-export function StockHQFetch(hq_list, transmit) {
+export function StockMarketDataFetch(hq_list, transmit) {
     let hdr = transmit || 'https';
     let hq_str = hq_list.join(',');
     let hq_result_array = hq_list.map(element => {
@@ -16,8 +16,8 @@ export function StockHQFetch(hq_list, transmit) {
         success: (data) => {
             let result = [];
             hq_result_array.map(e => {
-                let stockcode = e.split("_")[2];
-                result.push(StockHQStrParser(window[e],stockcode));
+                let stocksymbol = e.split("_")[2];
+                result.push(StockMarketDataStrParser(window[e],stocksymbol));
             });
             //console.log(result);
             resolve(result);
@@ -31,7 +31,7 @@ export function StockHQFetch(hq_list, transmit) {
 function f_num(x){
     return Number.parseFloat(x).toFixed(1);
 }
-export function StockHQStrParser(hq_str,stockcode) {
+export function StockMarketDataStrParser(hq_str,stocksymbol) {
     /* 行情字段样本 
     var hq_str_sz300104="乐视网,3.620,3.620,3.740,3.900,3.530,3.740,3.750,
                         93592597,347848108.540,
@@ -41,7 +41,7 @@ export function StockHQStrParser(hq_str,stockcode) {
     */
     let result = {};
     let e = hq_str.split(",");
-    result.code = stockcode;
+    result.symbol = stocksymbol;
     result.stockname = e[0]; //股票名称
     result.open = e[1]; //今开盘
     result.lastclose = e[2]; //今开盘

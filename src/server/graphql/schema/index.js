@@ -2,7 +2,7 @@
 
 import { mergeSchemas } from 'graphql-tools';
 import sub_schema from './test_subscription';
-import stock_hq from './stock_hq';
+import stock_market_data from './stock_market_data';
 import user_schema from './user';
 import loginhistory_schema from './loginhistory';
 
@@ -11,7 +11,7 @@ const schema = mergeSchemas({
         sub_schema,
         user_schema,
         loginhistory_schema,
-        stock_hq
+        stock_market_data
     ],
 });
 

@@ -1,6 +1,6 @@
-const Stock_HQ_Type = `
+const  Stock_Market_Data_Type = `
 input StockType_INPUT {
-    code: String!
+    symbol: String!
     stockname: String!
     currentdate: String
     currenttime: String
@@ -26,7 +26,7 @@ input OrderQueue_INPUT {
 }
 
 type StockType {
-  code: String!
+  symbol: String!
   stockname: String
   currentdate: String
   currenttime: String
@@ -60,8 +60,8 @@ type Mutation {
 }
 type Subscription {
   LISTEN_STOCK_DATA: [StockType!]!
-  LISTEN_STOCK_DATA_BY_CODELIST(code:[String!]!): [StockType!]!
+  LISTEN_STOCK_DATA_BY_SYMBOL_LIST(symbol_list:[String!]!): [StockType!]!
 }
 `;
 
-export default Stock_HQ_Type;
+export default Stock_Market_Data_Type;

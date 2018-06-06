@@ -1,6 +1,6 @@
 import React   from 'react';
 import Content from '../../component/layout/content';
-import StockHQ from '../../../_service/sina_hq/stock';
+import StockMarketDataFetchAgent from '../../../_service/sina_market_data/stock';
 
 class LoginHistory extends React.Component{
     
@@ -9,8 +9,8 @@ class LoginHistory extends React.Component{
         const hqlist2 = ['sz000001','sz000002','sz300003'];
     return (
                 <Content>
-                    <StockHQ key="stock1" stocklist = {hqlist1} interval={15000}/>
-                    <StockHQ key="stock2" stocklist = {hqlist2} interval={15000}/>
+                    <StockMarketDataFetchAgent key="stock1" stocklist = {hqlist1} interval={15000}/>
+                    <StockMarketDataFetchAgent key="stock2" stocklist = {hqlist2} interval={15000}/>
                 </Content>
         );
     } 

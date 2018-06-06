@@ -2,9 +2,9 @@ import React from 'react';
 import {graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import {StockHQFetch,StockHQStrParser} from './api';
+import { StockMarketDataFetch,StockMarketDataStrParser} from './api';
 
-class StockHQ extends React.Component {
+class StockMarketDataFetchAgent extends React.Component {
     constructor(props) {
         super(props);
         this.fetchData = this.fetchData.bind(this);
@@ -20,7 +20,7 @@ class StockHQ extends React.Component {
     }
     fetchData() {
        // console.log('Fetching...',this.props.interval)
-        StockHQFetch(this.props.stocklist).then( 
+        StockMarketDataFetch(this.props.stocklist).then( 
             data => {
                 //console.log("-FetchResult:",data);
                 this.props.update_stock({
@@ -47,4 +47,4 @@ const POST_MUTATION = gql`
     }
 `;
 
-export default graphql(POST_MUTATION,{name: 'update_stock'})(StockHQ);
+export default graphql(POST_MUTATION,{name: 'update_stock'})(StockMarketDataFetchAgent);
