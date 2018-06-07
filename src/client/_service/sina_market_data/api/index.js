@@ -47,12 +47,19 @@ export function StockMarketDataStrParser(hq_str,stocksymbol) {
     result.open = e[1]; //今开盘
     result.lastclose = e[2]; //今开盘
     result.current = e[3]; //当前价
+    //有些时候开盘前是没有价格的，所以这时候当前价格以昨收计算
+    if (result.current == 0) {
+        result.current = result.lastclose;
+    }
+    result.pricechange = (result.current- result.lastclose).toFixed(3);
+    result.pctchange = ((result.pricechange / result.lastclose)* 100.0).toFixed(2) ;
+
     result.high = e[4]; //最高价
     result.low = e[5]; //最低价
     result.buy = e[6]; //买入价
     result.sell = e[7]; //卖出价
     result.voln =  f_num(e[8]); //成交量
-    result.volm = e[9]; //成交金额
+    result.volm = (e[9]/10000).toFixed(1); //成交金额(万元)
     //买一到买五队列
     result.orderbook = {};
     result.orderbook.buy = {};

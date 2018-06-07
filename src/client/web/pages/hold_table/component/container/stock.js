@@ -1,9 +1,10 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
-import { Spin, Table,Alert }  from 'antd';
+import { Spin, Alert }  from 'antd';
 import  gql  from 'graphql-tag';
-import LoadingBox from '../../../component/util/loadingbox';
-import ErrorBox from '../../../component/util/errorbox';
+import LoadingBox from '../../../../component/util/loadingbox';
+import ErrorBox from '../../../../component/util/errorbox';
+import Table from '../table/stock_table';
 
 
 class StockTable extends React.Component {
@@ -46,6 +47,8 @@ class StockTable extends React.Component {
                         currenttime
                         pricechange
                         pctchange
+                        high
+                        low
                         volm
                     }
                 }`,
@@ -75,10 +78,13 @@ class StockTable extends React.Component {
 
     const DataToRender = this._DataToRender();
     const columns = [{
-        title: '指数名称',
+        title: '股票代码',
+        dataIndex: 'symbol',
+      }, {
+        title: '股票名称',
         dataIndex: 'stockname',
       }, {
-        title: '当前点位',
+        title: '现价',
         dataIndex: 'current',
       }, {
         title: '涨跌',
@@ -87,6 +93,12 @@ class StockTable extends React.Component {
         title: '涨跌幅',
         dataIndex: 'pctchange',
       }, {
+        title: '最高',
+        dataIndex: 'high',
+      }, {
+        title: '最低',
+        dataIndex: 'low',
+      }, {          
         title: '成交金额（万元）',
         dataIndex: 'volm',
       }, {
@@ -95,9 +107,10 @@ class StockTable extends React.Component {
       }];
 
     return (
-       <Table rowKey={DataToRender => DataToRender.symbol} 
+       <Table chartname={this.props.chartname} 
+              rowKey={DataToRender => DataToRender.symbol} 
               dataSource={DataToRender} 
-              columns={columns}  pagination={false} />
+              columns={columns}   />
     );
  }
 }
@@ -111,6 +124,8 @@ query StockQuery($symbol_list:[String!]!){
       currenttime
       pricechange
       pctchange
+      high
+      low
       volm
     }
   }

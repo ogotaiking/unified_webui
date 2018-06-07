@@ -1,0 +1,84 @@
+
+$up_stop_bg_color: rgba(97, 180, 248, 0.527);
+$up_stop_font_color: rgba(241, 49, 35, 0.897);
+
+$down_stoploss_bg_color:  rgba(5, 5, 5, 0.863);
+$down_stoploss_font_color: rgba(252, 252, 252,1);
+$down_warning_bg_color:   rgba(241, 165, 23, 0.788);
+$down_warning_font_color: rgba(252, 252, 252,1);
+$up_font_color: rgba(241, 49, 35, 0.897);
+$down_font_color:  rgba(61, 190, 22, 0.966);
+$th_bg_color: rgba(230, 230, 230, 0.842);
+$th_font_color:rgb(0, 0, 0);
+
+$dark_bg_color:   rgba(230, 230, 230, 0.842);
+$dark_font_color:rgba(100, 98, 98, 0.986);
+$light_bg_color: rgb(255, 255, 255);
+$light_font_color:  rgba(100, 98, 98, 0.986);
+
+$hover_bg_color: rgba(101, 191, 243, 0.808);
+
+.pt_table {
+    width: 100%;
+    border: 0px solid #d1d1d1;
+    border-radius: 10px;
+    border-collapse: collapse;
+    font: normal 12px  "Segoe UI","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    text-align: center;
+    thead {
+        background-color:$th_bg_color;
+        padding: 1px;
+        font: bold 14px ;
+        color: $th_font_color;
+    }
+    thead>tr>th {
+        border-left: 1px solid $dark_bg_color;
+        border-right: 1px solid $dark_bg_color;
+        height: 28px;
+    }
+    tbody>tr {
+        background-color: $light_bg_color;
+        color: $light_font_color;
+        td {
+            border-left: 1px solid $dark_bg_color;
+            border-right: 1px solid $dark_bg_color;
+            height: 28px;
+        }
+    }
+    tbody>tr:nth-child(even) {
+        background-color: $dark_bg_color;
+        color:$dark_font_color;
+        td {
+            border-left: 1px solid $dark_bg_color;
+            border-right: 1px solid $dark_bg_color;
+            height: 28px;
+        }
+    }
+    tbody>tr.up_stop {
+        background-color: $up_stop_bg_color !important;
+        color:$up_stop_font_color !important;
+    }
+    tbody>tr.stoploss {
+        background-color: $down_stoploss_bg_color !important;
+        color:$down_stoploss_font_color !important;
+    }
+    tbody>tr.stoploss_warn {
+        background-color: $down_warning_bg_color !important;
+        color:$down_warning_font_color !important;
+    }
+    tbody>tr.up {
+        color:$up_font_color !important;
+    }    
+    tbody>tr.down {
+        color:$down_font_color !important;
+    } 
+    tbody>tr:hover{
+        background-color: $hover_bg_color !important;
+        transition: all 0.3s ease-in-out;
+    }
+    tbody>tr>td.string{
+        color: $light_font_color;
+    }
+  
+    
+}

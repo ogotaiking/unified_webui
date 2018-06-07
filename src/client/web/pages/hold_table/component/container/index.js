@@ -1,9 +1,10 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
-import { Spin, Table,Alert }  from 'antd';
+import { Spin, Alert }  from 'antd';
 import  gql  from 'graphql-tag';
-import LoadingBox from '../../../component/util/loadingbox';
-import ErrorBox from '../../../component/util/errorbox';
+import LoadingBox from '../../../../component/util/loadingbox';
+import ErrorBox from '../../../../component/util/errorbox';
+import Table from '../table/stock_table';
 
 
 class IndexTable extends React.Component {
@@ -78,24 +79,40 @@ class IndexTable extends React.Component {
     const columns = [{
         title: '指数名称',
         dataIndex: 'stockname',
+        style:{
+            width: '20%'
+        }
       }, {
         title: '当前点位',
         dataIndex: 'current',
+        style:{
+            width: '20%'
+        }
       }, {
         title: '涨跌',
         dataIndex: 'pricechange',
+        style:{
+            width: '20%'
+        }        
       }, {
         title: '涨跌幅',
         dataIndex: 'pctchange',
+        style:{
+            width: '20%'
+        }
       }, {
         title: '成交金额（万元）',
         dataIndex: 'volm',
+        style:{
+            width: '20%'
+        }        
       }];
 
     return (
-       <Table rowKey={DataToRender => DataToRender.symbol} 
+       <Table chartname={this.props.chartname} 
+              rowKey={DataToRender => DataToRender.symbol} 
               dataSource={DataToRender} 
-              columns={columns} size="small" pagination={false} />
+              columns={columns} />
     );
  }
 }
