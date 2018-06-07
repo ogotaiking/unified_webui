@@ -29,10 +29,10 @@ class Table extends React.PureComponent{
     }
 
     _parseRowData(data,columns,key) {
-        let val = data.pctchange;
+        let val = data.cum_pctchange;
         let styleclass = null;
         switch(true) {
-            case val > 9.5:
+            case ((data.pctchange > 9.3) && ( val > -5.0)): //涨停标注放宽并只对当日变动计算，而其它标注为整体盈亏和止损
                 styleclass = "up_stop";
                 break;
             case ((val > 0.0) && (val<=9.5)):
@@ -95,11 +95,20 @@ class Table extends React.PureComponent{
     render() {
         const thContent = this._parseTableHeader();
         const DataContent = this._parseTableData();
-        const footContent = null;
+        const footContent = (
+            <tr>
+                <td>本期持仓</td>
+                <td>{this.props.sum_money}</td>
+                <td>本期盈亏%</td>
+                <td>{this.props.sum_ratio}</td>
+                <td>本期盈亏</td>
+                <td>{this.props.sum_earn}</td>
+            </tr>
+        );
 
         return (
             <table className="pt_table">
-                <caption >{this.props.chartname}</caption>
+                <caption ><i className="fa fa-signal"/><span style={{marginLeft: '5px'}}>{this.props.chartname}</span></caption>
                 <thead>
                     <tr>
                         {thContent}
