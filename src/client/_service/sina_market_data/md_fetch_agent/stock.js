@@ -11,9 +11,9 @@ class StockMarketDataFetchAgent extends React.Component {
     }
     componentDidMount() {
         setTimeout( () => {
-            this.fetchData();
-            this.interval = setInterval(this.fetchData, parseInt(this.props.interval));     
+            this.fetchData();   
           }, Math.floor(Math.random() * 5000));       
+        this.interval = setInterval(this.fetchData, parseInt(this.props.interval));           
     }
     componentWillUnmount() {
         clearInterval(this.interval);

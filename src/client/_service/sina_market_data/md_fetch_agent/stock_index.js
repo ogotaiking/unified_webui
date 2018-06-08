@@ -12,8 +12,8 @@ class IndexMarketDataFetchAgent extends React.Component {
     componentDidMount() {
         setTimeout( () => {
             this.fetchData();
-            this.interval = setInterval(this.fetchData, parseInt(this.props.interval));     
-          }, Math.floor(Math.random() * 5000 + 3000));       
+        }, Math.floor(Math.random() * 5000 + 3000));       
+        this.interval = setInterval(this.fetchData, parseInt(this.props.interval));     
     }
     componentWillUnmount() {
         clearInterval(this.interval);
