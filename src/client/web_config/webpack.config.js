@@ -72,8 +72,8 @@ module.exports = {
             {
                 test: /\.(graphql|gql)$/,
                 exclude: /node_modules/,
-                loader: 'graphql-tag/loader',
-            },            
+                loader: 'graphql-tag/loader'
+            },
             // css文件的处理
             {
                 test: /\.css$/,

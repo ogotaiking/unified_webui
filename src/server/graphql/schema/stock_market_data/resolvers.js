@@ -40,18 +40,20 @@ const STOCK_INDEX_DATA = (root, args, ctx, info) =>{
 const UPDATE_STOCK_DATA = (root, { stock }) => {
   //console.log({stock});
   return stock.map((item)=>{
-    let stock_symbol = item.symbol;
+    let stock_symbol = item.id;
     stock_market_data[stock_symbol] = item;
     pubsub.publish(INDEX_CHANNEL+"_"+stock_symbol,item);
+    //return item;
   });
   };
 
 
 const UPDATE_STOCK_INDEX_DATA = (root, { stock }) => {
   return stock.map((item)=>{
-    let stock_symbol = item.symbol;
+    let stock_symbol = item.id;
     stock_market_data_index[stock_symbol] = item;
     pubsub.publish(INDEX_CHANNEL+"_"+stock_symbol,item);
+    return item;
   });
 };
 

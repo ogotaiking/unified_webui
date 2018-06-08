@@ -42,7 +42,7 @@ export function StockMarketDataStrParser(hq_str,stocksymbol) {
     */
     let result = {};
     let e = hq_str.split(",");
-    result.symbol = stocksymbol;
+    result.id = stocksymbol;
     result.stockname = e[0]; //股票名称
     result.open = e[1]; //今开盘
     result.lastclose = e[2]; //今开盘
@@ -126,7 +126,7 @@ export function StockMarketData_Index_StrParser(hq_str,symbol) {
 
     let result = {};
     let e = hq_str.split(",");
-    result.symbol = symbol;
+    result.id = symbol;
     result.stockname = e[0]; //股票or指数名称
     result.current = parseFloat(e[1]); //当日价格
     result.pricechange = parseFloat(e[2]); //当日涨跌值

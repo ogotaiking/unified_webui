@@ -1,8 +1,8 @@
 import React from 'react';
-import {graphql } from 'react-apollo';
+import {graphql ,withApollo} from 'react-apollo';
 import gql from 'graphql-tag';
-
-import { StockMarketData_IndexFetch } from './api';
+import { STOCK_INDEX_DATA_MUTATION } from '../graphql/stock_index';
+import { StockMarketData_IndexFetch } from '../api';
 
 class IndexMarketDataFetchAgent extends React.Component {
     constructor(props) {
@@ -20,7 +20,7 @@ class IndexMarketDataFetchAgent extends React.Component {
     }
     fetchData() {
        // console.log('Fetching...',this.props.interval)
-       StockMarketData_IndexFetch(this.props.indexlist).then( 
+       StockMarketData_IndexFetch(this.props.symbol_list).then( 
             data => {
                 //console.log("-FetchResult:",data);
                 this.props.update_stock({
@@ -28,6 +28,10 @@ class IndexMarketDataFetchAgent extends React.Component {
                         data
                     }
                 });
+                //clear mutation cache to avoid memoryleak
+                //console.log(window.__APOLLO_CLIENT__.store.cache.data.data['ROOT_MUTATION']);
+                this.props.client.store.cache.data.delete('ROOT_MUTATION');
+                //console.log(window.__APOLLO_CLIENT__.store.cache.data.data['ROOT_MUTATION']);
             });   
     }
     render(){        
@@ -36,16 +40,5 @@ class IndexMarketDataFetchAgent extends React.Component {
         );
     } 
 }
-const POST_MUTATION = gql`
-    mutation PostMutation($data: [StockIndex_INPUT!]!){
-        UPDATE_STOCK_INDEX_DATA(stock: $data) 
-        {
-            stockname
-            current
-            pricechange
-            pctchange
-        }
-    }
-`;
 
-export default graphql(POST_MUTATION,{name: 'update_stock'})(IndexMarketDataFetchAgent);
+export default graphql(STOCK_INDEX_DATA_MUTATION,{name: 'update_stock'})(withApollo(IndexMarketDataFetchAgent));

@@ -1,8 +1,8 @@
 import React from 'react';
-import {graphql } from 'react-apollo';
+import {graphql,withApollo} from 'react-apollo';
 import gql from 'graphql-tag';
-
-import { StockMarketDataFetch } from './api';
+import { STOCK_DATA_MUTATION } from '../graphql/stock';
+import { StockMarketDataFetch } from '../api';
 
 class StockMarketDataFetchAgent extends React.Component {
     constructor(props) {
@@ -20,7 +20,7 @@ class StockMarketDataFetchAgent extends React.Component {
     }
     fetchData() {
        // console.log('Fetching...',this.props.interval)
-        StockMarketDataFetch(this.props.stocklist).then( 
+        StockMarketDataFetch(this.props.symbol_list).then( 
             data => {
                 //console.log("-FetchResult:",data);
                 this.props.update_stock({
@@ -28,23 +28,15 @@ class StockMarketDataFetchAgent extends React.Component {
                         data
                     }
                 });
+                //clear mutation cache to avoid memoryleak
+                this.props.client.store.cache.data.delete('ROOT_MUTATION');
             });   
     }
-    render(){        
+    render(){    
         return (
             <div />
         );
     } 
 }
-const POST_MUTATION = gql`
-    mutation PostMutation($data: [StockType_INPUT!]!){
-        UPDATE_STOCK_DATA(stock: $data) 
-        {
-            stockname
-            currentdate
-            currenttime
-        }
-    }
-`;
 
-export default graphql(POST_MUTATION,{name: 'update_stock'})(StockMarketDataFetchAgent);
+export default graphql(STOCK_DATA_MUTATION,{name: 'update_stock'})(withApollo(StockMarketDataFetchAgent));

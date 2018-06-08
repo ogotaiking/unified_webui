@@ -28,8 +28,7 @@ class Table extends React.PureComponent{
         });
     }
 
-    _parseRowData(data,columns,key) {
-        let val = data.pctchange;
+    _rowStyle(val){
         let styleclass = null;
         switch(true) {
             case val > 9.5:
@@ -50,6 +49,11 @@ class Table extends React.PureComponent{
             default:
                 styleclass = null;
         }
+        return styleclass;
+    }
+
+    _parseRowData(data,columns,key) {
+        let styleclass = this._rowStyle(data.pctchange);       
         let tdContent = this._parseCellData(data,columns,key);
         if (styleclass != null) {
             return (

@@ -1,7 +1,7 @@
 const  Stock_Market_Data_Type = `
 
 type StockType {
-  symbol: String!
+  id: String!
   stockname: String
   currentdate: String
   currenttime: String
@@ -20,7 +20,7 @@ type StockType {
 }
 
 input StockType_INPUT {
-  symbol: String!
+  id: String!
   stockname: String!
   currentdate: String
   currenttime: String
@@ -59,7 +59,7 @@ input OrderQueue_INPUT {
 }
 
 type StockIndex_Type {
-  symbol: String!
+  id: String!
   stockname: String
   current: Float
   pricechange: Float
@@ -69,7 +69,7 @@ type StockIndex_Type {
 }
 
 input StockIndex_INPUT {
-  symbol: String!
+  id: String!
   stockname: String
   current: Float
   pricechange: Float
