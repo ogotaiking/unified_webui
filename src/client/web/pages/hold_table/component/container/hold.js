@@ -85,7 +85,7 @@ class HoldTable extends React.Component {
   }
 
   _DataToRender = () => {
-    console.log('re-rending....');
+    //console.log('re-rending....');
     return [...this.state.hold_table.values()];
   }
 
