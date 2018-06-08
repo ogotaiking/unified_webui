@@ -21,7 +21,7 @@ module.exports = {
         app: path.resolve(__dirname, '../web/index.js'),
         vendor_1: ['babel-polyfill', 'react', 'react-dom','react-router','react-router-dom'],
         vendor_2: ['jquery','axios','redux','redux-thunk','react-redux','immutable','redux-immutable'], 
-        vendor_3: ['antd']
+        //vendor_3: ['antd'] remove antd as sperate vendor could accelerate package size.
     },
     output: {
         path: path.resolve(__dirname, '../../../dist'),
