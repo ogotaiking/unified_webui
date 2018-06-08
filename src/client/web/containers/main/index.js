@@ -24,10 +24,10 @@ class Main extends React.Component{
   
   componentDidMount(){
     if (this.props.user.get("uid")=== null) {
-      //此处延迟300ms先让系统渲染出全屏LoginDIV，防止首页白屏时间过长的问题
+      //此处延迟50ms先让系统渲染出全屏LoginDIV，防止首页白屏时间过长的问题
       setTimeout(()=> {
         this._loadAsyncData(this.props.user.get("uid"));
-      }, 300);     
+      }, 50);     
     }
   }
 
