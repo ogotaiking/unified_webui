@@ -21,7 +21,8 @@ module.exports = {
         app: path.resolve(__dirname, '../web/index.js'),
         vendor_1: ['babel-polyfill', 'react', 'react-dom','react-router','react-router-dom'],
         vendor_2: ['jquery','axios','redux','redux-thunk','react-redux','immutable','redux-immutable'], 
-        //vendor_3: ['antd'] remove antd as sperate vendor could accelerate package size.
+        //vendor_3: ['apollo-client','apollo-link','apollo-link-http','apollo-link-state','apollo-link-ws','apollo-utilities','graphql','graphql-tag','react-apollo','apollo-cache-inmemory'],
+        //vendor_4: ['antd'] remove antd as sperate vendor could accelerate package size.
     },
     output: {
         path: path.resolve(__dirname, '../../../dist'),
