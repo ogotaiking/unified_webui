@@ -44,13 +44,13 @@ class IndexTable extends React.Component {
         title: '涨跌幅',
         dataIndex: 'pctchange',
         style:{
-            width: '20%'
+            width: '15%'
         }
       }, {
-        title: '成交金额（万元）',
+        title: '成交金额（亿）',
         dataIndex: 'volm',
         style:{
-            width: '20%'
+            width: '25%'
         }        
       }];
 

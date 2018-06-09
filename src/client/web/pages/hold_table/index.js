@@ -80,10 +80,16 @@ class HoldTablePage extends React.Component{
                         <StockTable symbol_list={hqlist2} chartname="2018-05-03持仓"/>
                     </StockSubWrap>
 
-
+                    <div>指数行情</div>
                     <StockIdxSubWrap symbol_list={sum_list}>
-                        <IndexTable symbol_list={china_index}/>
-                        <IndexTable symbol_list={global_index}/>
+                    <table style={{width: "100%"}}>
+                        <tbody >
+                            <tr >
+                        <td><IndexTable symbol_list={china_index}/></td>
+                        <td><IndexTable symbol_list={global_index}/></td>
+                       </tr>
+                       </tbody>
+                    </table>
                     </StockIdxSubWrap>
 
                     <StockData key="stock1" symbol_list = {hqlist1} interval={15000}/>

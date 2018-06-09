@@ -59,20 +59,22 @@ class StockIndexSubWrapper extends React.Component {
         });
   }
 
-  render() {
-    if (this.props.children instanceof Array ) {
-        let result = this.props.children.map((item,iter)=>{
-            return React.cloneElement(item, {key: iter, market_data: this.state.market_data});
-        });
-        return (<div>{result}</div>);
-    } else {
-        return (
-            <div>
-            {React.cloneElement(this.props.children, {market_data: this.state.market_data})}
-            </div>
-        );
+  recursiveCloneChildren(children,market_data) {
+    return React.Children.map(children, child => {
+        let childProps = {};
+        if (React.isValidElement(child)) {
+            childProps = market_data;
+        }
+        childProps.children = this.recursiveCloneChildren(child.props.children,market_data);
+        return React.cloneElement(child, childProps);
+    });
+  }
+
+  render(){
+      const md = this.state.market_data;
+      let children = this.recursiveCloneChildren(this.props.children,{market_data: md});
+      return (<div>{children}</div>);
     }
- }
 }
 
 export default graphql(STOCK_INDEX_DATA_QUERY, {

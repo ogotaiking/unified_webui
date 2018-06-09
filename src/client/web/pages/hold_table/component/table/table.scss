@@ -1,38 +1,40 @@
 
-$up_stop_bg_color: rgba(97, 180, 248, 0.527);
-$up_stop_font_color: rgba(241, 49, 35, 0.897);
+$up_stop_bg_color:   rgba(97, 180, 248, 0.267);
+$up_stop_font_color:  rgb(241, 110, 35);
 
-$down_stoploss_bg_color:  rgba(5, 5, 5, 0.863);
-$down_stoploss_font_color: rgba(252, 252, 252,1);
-$down_warning_bg_color:   rgba(241, 165, 23, 0.788);
-$down_warning_font_color: rgba(252, 252, 252,1);
-$up_font_color: rgba(241, 49, 35, 0.897);
-$down_font_color:  rgba(61, 190, 22, 0.966);
+$down_stoploss_bg_color:  rgba(75, 75, 75, 0.78);
+$down_stoploss_font_color: rgb(248, 248, 250);
+$down_warning_bg_color:   rgba(241, 165, 23, 0.363);
+$down_warning_font_color:  rgb(13, 81, 207);
+$up_font_color: rgb(241, 110, 35);
+$down_font_color:  rgb(47, 170, 10);
 $th_bg_color: rgba(230, 230, 230, 0.842);
-$th_font_color:rgba(116, 114, 114, 0.863);
+$th_font_color:rgba(116, 114, 114, 1);
 
-$dark_bg_color:   rgba(230, 230, 230, 0.842);
-$dark_font_color:rgba(100, 98, 98, 0.986);
+$dark_bg_color:   rgba(229, 226, 226, 0.23);
+$dark_font_color:rgba(100, 98, 98, 1);
 $light_bg_color: rgb(255, 255, 255);
-$light_font_color:  rgba(100, 98, 98, 0.986);
+$light_font_color:  rgba(100, 98, 98, 1);
 
-$hover_bg_color: rgba(101, 191, 243, 0.808);
+$hover_bg_color: rgba(194, 226, 53, 0.78);
 
-$header_font_size : 14px;
-$content_font_size : 12px;
-$row_height : 28px;
+$header_font_size : 1.25rem;
+$content_font_size : 1.2rem;
+$row_height : 2.4rem;
 
 .pt_table {
     width: 100%;
-    border: 0px solid #d1d1d1;
+    border: 1px solid $dark_bg_color;
     border-radius: 10px;
     border-collapse: collapse;
-    font: normal $content_font_size  "Segoe UI","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-style: normal "Segoe UI","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size: $content_font_size ;
     text-align: center;
     thead {
-        background-color:$th_bg_color;
+        background:$th_bg_color;
         padding: 1px;
-        font: bold $header_font_size ;
+        font-style: bold;
+        font-size:  $header_font_size ;
         color: $th_font_color;
     }
     thead>tr>th {
@@ -40,34 +42,32 @@ $row_height : 28px;
         border-right: 1px solid $dark_bg_color;
         height: $row_height;
     }
+    
     tbody>tr {
-        background-color: $light_bg_color;
+        background: $light_bg_color;
         color: $light_font_color;
-        td {
-            border-left: 1px solid $dark_bg_color;
-            border-right: 1px solid $dark_bg_color;
-            height: $row_height;
-        }
     }
     tbody>tr:nth-child(even) {
-        background-color: $dark_bg_color;
+        background: $dark_bg_color;
         color:$dark_font_color;
-        td {
-            border-left: 1px solid $dark_bg_color;
-            border-right: 1px solid $dark_bg_color;
-            height: $row_height;
-        }
     }
     tbody>tr.up_stop {
-        background-color: $up_stop_bg_color !important;
+        background: $up_stop_bg_color !important;
         color:$up_stop_font_color !important;
     }
+    tbody>tr.stoploss:hover {
+        background: $hover_bg_color !important;
+        transition: all 0.3s ease-in-out;
+        color:$dark_font_color !important;
+        
+    }
     tbody>tr.stoploss {
-        background-color: $down_stoploss_bg_color !important;
+        background: $down_stoploss_bg_color !important;
         color:$down_stoploss_font_color !important;
+        //border-bottom: 2px dotted rebeccapurple;
     }
     tbody>tr.stoploss_warn {
-        background-color: $down_warning_bg_color !important;
+        background: $down_warning_bg_color !important;
         color:$down_warning_font_color !important;
     }
     tbody>tr.up {
@@ -77,12 +77,33 @@ $row_height : 28px;
         color:$down_font_color !important;
     } 
     tbody>tr:hover{
-        background-color: $hover_bg_color !important;
+        background: $hover_bg_color !important;
         transition: all 0.3s ease-in-out;
     }
+    tbody>tr>td {
+        border-left: 1px solid $dark_bg_color;
+        border-right: 1px solid $dark_bg_color;
+        height: $row_height;
+    }    
     tbody>tr>td.string{
         color: $light_font_color;
     }
+    tfoot {
+        background:$th_bg_color;
+        padding: 1px;
+        font-style: bold;
+        font-size:  $header_font_size ;
+        color: $th_font_color;
+    }
+    tfoot>tr:hover{
+        background: $hover_bg_color !important;
+        transition: all 0.3s ease-in-out;
+    }    
+    tfoot>tr>td {
+        border-left: 1px solid $dark_bg_color;
+        border-right: 1px solid $dark_bg_color;
+        height: $row_height;
+    }    
   
     
 }

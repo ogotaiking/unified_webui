@@ -133,7 +133,7 @@ export function StockMarketData_Index_StrParser(hq_str,symbol) {
     result.pctchange = parseFloat(e[3]); //当日涨跌幅%
     if (e.length > 4) {
         result.voln =  parseFloat(e[4]); //成交量（手）
-        result.volm = parseFloat(e[5]); //成交金额（万元）
+        result.volm = (parseFloat(e[5])/10000).toFixed(2); //成交金额（亿元）
     } else {
         result.voln =  0.0;
         result.volm =  0.0;
