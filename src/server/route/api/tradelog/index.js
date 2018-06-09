@@ -1,18 +1,17 @@
 'use strict';
-
-import sendfile from 'koa-sendfile';
 import multer from 'koa-multer';
 
 //TODO modify PATH to global config folder ?
 //或者根据不同的任务需求安排不同的path
 
-const FILE_STORAGE_PATH = '/tmp/upload/';
-const MAX_FILE_SIZE = 20 * 1024 * 1024;
+const FILE_STORAGE_PATH = '/tmp';
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const CLIENT_FORM_UPLOAD_NAME = 'file';
 
 function FileHashName(OriginalName) {
     let fileFormat = (OriginalName).split(".");
-    return Date.now() +"_"+ Math.random().toString() + "." + fileFormat[fileFormat.length - 1]
+    let DateNow = new Date().toLocaleDateString().replace(/\//g,"-");
+    return "tradelog."+ DateNow + "." + fileFormat[fileFormat.length - 1];
 }
 
 let storage = multer.diskStorage({
@@ -40,6 +39,7 @@ const uploadHandler = async (ctx, next) => {
       await defaultHandler(ctx, next);
     }catch(e){
       ctx.error = e;
+      console.log(e);
     }
     if(ctx.error){
         ctx.status = 500;
@@ -50,6 +50,7 @@ const uploadHandler = async (ctx, next) => {
         };
     }else{
       let data = ctx.req.file;
+      console.log(data);
       ctx.status = 200;
       ctx.body = {
           status : 'success',
@@ -63,12 +64,4 @@ const uploadHandler = async (ctx, next) => {
 
 export default (router) => {
     router.post('/upload', uploadHandler);
-    
-    router.get('/download/:name', async (ctx) => {
-        const name = ctx.params.name;
-        const path = `${FILE_STORAGE_PATH}/${name}`;
-        ctx.attachment(decodeURI(path));
-        await sendfile(ctx, path);
-    });
-
 };

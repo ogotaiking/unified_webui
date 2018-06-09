@@ -6,8 +6,8 @@ const Dragger = Upload.Dragger;
 const props = {
     name: 'file',
     multiple: true,
-    accept:['.xls','.csv'],
-    action: '/api/file/upload',
+    accept:'.xls,.csv,.pdf',
+    action: '/api/tradelog/upload',
     onChange(info) {
       const status = info.file.status;
       if (status !== 'uploading') {

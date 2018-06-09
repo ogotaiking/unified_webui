@@ -16,6 +16,7 @@ const routerConfigs = [
   { folder: 'api/user', prefix: '/api/user' },
   { folder: 'api/_test', prefix: '/api/test' },
   { folder: 'api/upload', prefix: '/api/file' },
+  { folder: 'api/tradelog', prefix: '/api/tradelog' },
   
 ];
 
