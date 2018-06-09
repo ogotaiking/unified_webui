@@ -1,20 +1,6 @@
 import React from 'react';
-import {
-  graphql
-} from 'react-apollo';
-import {
-  Spin,
-  Alert
-} from 'antd';
-import gql from 'graphql-tag';
-import LoadingBox from '../../../../component/util/loadingbox';
-import ErrorBox from '../../../../component/util/errorbox';
 import Table from '../table/hold_table';
 
-import {
-  STOCK_DATA_QUERY,
-  STOCK_DATA_SUBSCRIPTION
-} from '../../../../../_service/sina_market_data/graphql/stock';
 
 
 class HoldTable extends React.Component {
@@ -90,6 +76,7 @@ class HoldTable extends React.Component {
   }
 
   render() {
+    console.log(window.innerWidth,window.innerHeight);
     const DataToRender = this._DataToRender();
     let sum_money = 0.0;
     let sum_ratio = 0.0;

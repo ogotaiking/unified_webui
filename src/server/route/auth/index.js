@@ -1,6 +1,5 @@
 'use strict';
 
-import url from 'url';
 import passport from "koa-passport";
 import jwt from 'jsonwebtoken';
 import {
@@ -9,7 +8,7 @@ import {
 
 import User from '../../models/user';
 import LoginHistory from '../../models/loginhistory';
-import {SessionConfig,TokenMaxage } from '../../../../config';
+import { ServerConfig, SessionConfig,TokenMaxage } from '../../../../config';
 import {
     authLocal,
     authToken,
@@ -202,10 +201,10 @@ export default (router) => {
     // 此处我们使用了简单的API Server的方式
     
     router.post('/token', isAuthenticated(), generateToken());
-    router.post('/register', register(), generateToken());
-    router.get('/github', isGithubAuthenticated());
-    router.get('/github/callback', isGithubAuthenticatedCallback());
     
+    if (ServerConfig.allow_sign) {
+        router.post('/register', register(), generateToken());
+    }
     /**
      * Disable 3rd Party Authentication.
     router.get('/facebook', isFacebookAuthenticated());

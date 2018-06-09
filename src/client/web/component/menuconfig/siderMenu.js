@@ -52,7 +52,7 @@ const Option_MD = {
 };
 
 const UPDATE_TRADE_LOG ={
-    key: 'upload_trade_log',
+    key: 'upload_tradelog',
     name: '上传交易信息',
     icon: 'android',
     priv: 10

@@ -35,11 +35,23 @@ class StockTable extends React.Component {
         title: '涨跌幅',
         dataIndex: 'pctchange',
       }, {
+        title: '开盘价',
+        dataIndex: 'open',        
+      }, {
+        title: '昨收',
+        dataIndex: 'lastclose',        
+      }, {
         title: '最高',
         dataIndex: 'high',
       }, {
         title: '最低',
         dataIndex: 'low',
+      }, {
+        title: '买入价',
+        dataIndex: 'buy',
+      }, {
+        title: '卖出价',
+        dataIndex: 'sell',        
       }, {          
         title: '成交金额（万元）',
         dataIndex: 'volm',

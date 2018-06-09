@@ -3,6 +3,7 @@
 export const ServerConfig = {
     'port': 3000,
     'app_timeout': 5000,
+    'allow_sign' : true,
 };
 
 
