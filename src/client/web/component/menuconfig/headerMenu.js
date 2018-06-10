@@ -17,6 +17,14 @@ const UserMenu = {
     }]
 };
 
+const UPDATE_TRADE_LOG ={
+    key: 'upload_tradelog',
+    name: '上传交易信息',
+    icon: 'android',
+    priv: 10
+};
+
+
 const FOO = {
     key: 'foo',
     name: 'test',
@@ -58,7 +66,8 @@ const FOO = {
 
 const headerMenu = [
     UserMenu,
-    FOO
+    UPDATE_TRADE_LOG,
+    //FOO
 ];
 
 export default headerMenu;

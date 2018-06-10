@@ -9,7 +9,7 @@ const Hold_Table = {
 };
 
 const Clearence_Table = {
-    key: 'clear_table',
+    key: 'clearence',
     name: '清算列表',
     icon: 'credit-card',
 };
@@ -51,12 +51,6 @@ const Option_MD = {
     ],
 };
 
-const UPDATE_TRADE_LOG ={
-    key: 'upload_tradelog',
-    name: '上传交易信息',
-    icon: 'android',
-    priv: 10
-};
 
 const FOO = {
     key: 'foo',
@@ -102,8 +96,7 @@ const sidebarMenu = [
     Clearence_Table,
     Future_MD,
     Option_MD,
-    FOO,
-    UPDATE_TRADE_LOG
+    FOO
 ];
 
 export default sidebarMenu;

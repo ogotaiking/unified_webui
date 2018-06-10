@@ -13,8 +13,6 @@ import ClearenceTableDB from '../../../models/stock/clearence';
 //或者根据不同的任务需求安排不同的path
 
 const FILE_STORAGE_PATH = '/tmp';
-export const HOLD_TABLE_FILE_PATH = FILE_STORAGE_PATH + '/hold_table.csv';
-export const CLEARENCE_TABLE_FILE_PATH = FILE_STORAGE_PATH + '/current_clearence.csv';
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const CLIENT_FORM_UPLOAD_NAME = 'file';
 const DEBUG = false;
@@ -48,15 +46,11 @@ function replaceStream(needle, replacer) {
 }
 
 function processTradeLog(filepath,tradeflag){
-    let log_header = 'id,symbol,name,trade_date,trade_price,volume,total_moeny';
     let log_trade_flag = '证券买入';
     let trade_with_tax_ratio =  0.0015;
-    let logfilename = HOLD_TABLE_FILE_PATH;
     if (tradeflag == "sell") {
         log_trade_flag = '证券卖出';
         trade_with_tax_ratio = 0;
-        logfilename = CLEARENCE_TABLE_FILE_PATH;
-
     }
     let trade_map = new Map();
     fs.createReadStream(filepath)
@@ -99,64 +93,17 @@ function processTradeLog(filepath,tradeflag){
                 //merge to existing hold table
                 if(DEBUG) console.log(trade_map);
 
-                //数据备份和创建表头等工作采用同步模式先处理完
-                try {
-                    let stats = fs.statSync(logfilename);
-                    if(DEBUG) console.log('文件存在');
-                    fs.copyFileSync(logfilename,logfilename+'.bak');
-                    if(DEBUG) console.log('...Done.');
-                } 
-                catch(err){
-                    if(DEBUG) console.log('文件不存在或不是标准文件');
-                    fs.writeFileSync(logfilename,log_header+'\n',{flags: 'w'});
-                    if(DEBUG) console.log('Done....');
-                }
-
                 let DBHandler = HoldTableDB;
                 if ( tradeflag == "sell") {
                     DBHandler = ClearenceTableDB;
-                    DBHandler.collection.drop();                  
+                    await ClearenceTableDB.remove({});
                 }
-                    
-                DBHandler.insertMany([...trade_map.values()]);
-                
-                console.log('insert done..')
-
-                //Export to csv for backup....
-                
-                let logfile = fs.createWriteStream(logfilename,{flags: 'w'});
-                if (tradeflag == 'sell') {
-                    logfile.write(log_header+'\n');
-                }
-
-                let trade_date_flag = '';
-                DBHandler.find({}).stream().on('data',function(data){
-                    if (trade_date_flag != data.trade_date ) {
-                        //add blank for easy use
-                        logfile.write('\n');
-                        trade_date_flag = data.trade_date;
-                    }
-                    const  csv_str = data.id + ',' 
-                                     + data.symbol + ',' 
-                                     + data.name + ',' 
-                                     + data.trade_date + ',' 
-                                     + data.trade_price + ',' 
-                                     + data.volume + ',' 
-                                     + data.total_money +'\n';
-                    logfile.write(csv_str);
-                }).on('end',()=>{
-                    logfile.end();
-
-                });
-                
+                await DBHandler.insertMany([...trade_map.values()]);
 
                 //delete temp trade log file.
-                /*
-                    fs.unlink(filepath,function(err){
-                        if(err) return console.log(err);
-                    });
-                    */
-
+                fs.unlink(filepath,function(err){
+                    if(err) return console.log(err);
+                });
     }).on('close', function(){ console.log('something wrong ...'); });
 }
   

@@ -6,9 +6,9 @@ import StockIdxData from '../../../_service/sina_market_data/md_fetch_agent/stoc
 import StockSubWrap from '../../../_service/sina_market_data/md_sub/stock';
 import StockIdxSubWrap from '../../../_service/sina_market_data/md_sub/stock_index';
 
-import StockTable from './component/container/stock';
-import IndexTable from './component/container/index';
-import HoldTable from './component/container/hold';
+import StockTable from '../../component/stock_table/container/stock';
+import IndexTable from '../../component/stock_table/container/index';
+import HoldTable from '../../component/stock_table/container/hold';
 
 
 
