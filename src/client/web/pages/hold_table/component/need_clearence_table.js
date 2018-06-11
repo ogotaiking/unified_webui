@@ -7,31 +7,10 @@ import HoldTable from '../../../component/stock_table/container/hold';
 import LoadingBox from '../../../component/util/loadingbox';
 import ErrorBox from '../../../component/util/errorbox';
 
-class HoldTableContainer extends React.Component{
+class NeedToClearenceTable extends React.Component{
     returnRenderJSX(data) {       
-        let hash_map = new Map();
-        if (data.HOLD_TABLE instanceof Array) {
-            data.HOLD_TABLE.map((item)=>{
-                let key = item.trade_date;
-                let bucket = hash_map.get(key);
-                let result_list = [];
-                if (bucket) {
-                    result_list = bucket;
-                } 
-                result_list.push(item);
-                hash_map.set(key,result_list);
-            });
-        }
-
-        let result_jsx = [];
-        hash_map.forEach((value,key)=>{
-            let chartname = key + "持仓";
-            result_jsx.push(<HoldTable key={key} hold_data={value} chartname={chartname}/>);
-        });
-
-        //console.log(hash_map,result_jsx);
         return (  <StockSubWrap symbol_list={data.HOLD_STOCK_LIST}>
-            {result_jsx.map((item)=>{return item;})}
+            <HoldTable hold_data={data.HOLD_TABLE} chartname="需要卖出清算的表单" stoploss_rate={this.props.stoploss_rate} clearence_mode="true" max_hold_day={this.props.max_hold_day} />
         </StockSubWrap>);
     }
     render() {
@@ -48,5 +27,5 @@ class HoldTableContainer extends React.Component{
     } 
 }
   
-export default HoldTableContainer;
+export default NeedToClearenceTable;
 

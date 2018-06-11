@@ -9,6 +9,8 @@ import IndexTable from '../../component/stock_table/container/index';
 
 import HoldTableMarketData from './component/hold_table_md';
 import HoldTableContainer from './component/hold_table';
+import NeedToClearenceTable from './component/need_clearence_table';
+
 
 
 import StockSubWrap from '../../../_service/sina_market_data/md_sub/stock';
@@ -26,6 +28,7 @@ class HoldTablePage extends React.Component{
                 <Content>
                     <HoldTableMarketData interval={15000}/>
                     <HoldTableContainer/>
+                    <NeedToClearenceTable stoploss_rate="5.0" max_hold_day="13" />
 
                     <div>指数行情</div>
                     <StockIdxSubWrap symbol_list={index_list}>
