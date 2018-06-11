@@ -22,7 +22,10 @@ input TradeLog_INPUT {
 
 type Query {
   HOLD_TABLE: [TradeLog_Type!]!
+  HOLD_TABLE_SUMMARY: [TradeLog_Type!]!
+  HOLD_STOCK_LIST:[String!]!
   CLEARENCE_TABLE: [TradeLog_Type!]!
+  CLEARENCE_STOCK_LIST:[String!]!
 }
 type Mutation {
   UPDATE_HOLD_TABLE: [TradeLog_Type!]!

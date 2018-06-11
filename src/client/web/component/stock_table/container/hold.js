@@ -18,16 +18,16 @@ class HoldTable extends React.Component {
       let shouldChange = true;
       let result = new Map();
       nextProp.hold_data.map((hold_item) => {
-        if (!nextProp.market_data.get(hold_item.id)) {
+        if (!nextProp.market_data.get(hold_item.symbol)) {
           shouldChange = false;
         } else {
-          let new_item = { ...nextProp.market_data.get(hold_item.id)      };
+          let new_item = { ...nextProp.market_data.get(hold_item.symbol)      };
           new_item.buy_date = hold_item.buy_date;
-          new_item.hold_vol = hold_item.hold_vol;
+          new_item.volume = hold_item.volume;
           new_item.total_money = hold_item.total_money;
-          new_item.hold_price = (hold_item.total_money / hold_item.hold_vol).toFixed(3);
+          new_item.hold_price = (hold_item.total_money / hold_item.volume).toFixed(3);
           new_item.cum_pctchange = ((new_item.current - new_item.hold_price) * 100.0 / new_item.hold_price).toFixed(2);
-          new_item.earn = (new_item.current * new_item.hold_vol - new_item.total_money).toFixed(2);
+          new_item.earn = (new_item.current * new_item.volume - new_item.total_money).toFixed(2);
           result.set(new_item.id, new_item);
         }
       });
@@ -42,20 +42,20 @@ class HoldTable extends React.Component {
       let notChangeFlag = true;
       let result = prevState.hold_table;
       nextProp.hold_data.map((hold_item) => {
-        const id = hold_item.id;
+        const id = hold_item.symbol;
         //如果market_data中所持仓股票的数据，并且新的数据时间和已有table时间不一致，则更新
         if (
           (nextProp.market_data.get(id)) && 
           (nextProp.market_data.get(id).currenttime != result.get(id).currenttime)
         ) {
           notChangeFlag = false;
-          let new_item = { ...nextProp.market_data.get(hold_item.id)  };
+          let new_item = { ...nextProp.market_data.get(hold_item.symbol)  };
           new_item.buy_date = hold_item.buy_date;
-          new_item.hold_vol = hold_item.hold_vol;
+          new_item.volume = hold_item.volume;
           new_item.total_money = hold_item.total_money;
-          new_item.hold_price = (hold_item.total_money / hold_item.hold_vol).toFixed(3);
+          new_item.hold_price = (hold_item.total_money / hold_item.volume).toFixed(3);
           new_item.cum_pctchange = ((new_item.current - new_item.hold_price) * 100.0 / new_item.hold_price).toFixed(2);
-          new_item.earn = (new_item.current * new_item.hold_vol - new_item.total_money).toFixed(2);
+          new_item.earn = (new_item.current * new_item.volume - new_item.total_money).toFixed(2);
           result.set(new_item.id, new_item);
         }
       });
@@ -96,7 +96,7 @@ class HoldTable extends React.Component {
       dataIndex: 'stockname',
     }, {
       title: '持仓数量',
-      dataIndex: 'hold_vol',
+      dataIndex: 'volume',
     }, {
       title: '累计盈亏%',
       dataIndex: 'cum_pctchange',

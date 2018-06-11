@@ -128,9 +128,9 @@ export function StockMarketData_Index_StrParser(hq_str,symbol) {
     let e = hq_str.split(",");
     result.id = symbol;
     result.stockname = e[0]; //股票or指数名称
-    result.current = parseFloat(e[1]); //当日价格
-    result.pricechange = parseFloat(e[2]); //当日涨跌值
-    result.pctchange = parseFloat(e[3]); //当日涨跌幅%
+    result.current = parseFloat(e[1]).toFixed(3); //当日价格
+    result.pricechange = parseFloat(e[2]).toFixed(3); //当日涨跌值
+    result.pctchange = parseFloat(e[3]).toFixed(3); //当日涨跌幅%
     if (e.length > 4) {
         result.voln =  parseFloat(e[4]); //成交量（手）
         result.volm = (parseFloat(e[5])/10000).toFixed(2); //成交金额（亿元）

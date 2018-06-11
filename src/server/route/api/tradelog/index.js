@@ -13,8 +13,8 @@ import ClearenceTableDB from '../../../models/stock/clearence';
 //或者根据不同的任务需求安排不同的path
 
 const FILE_STORAGE_PATH = '/tmp';
-export const HOLD_TABLE_FILE_PATH = FILE_STORAGE_PATH + '/hold_table.csv';
-export const CLEARENCE_TABLE_FILE_PATH = FILE_STORAGE_PATH + '/current_clearence.csv';
+const HOLD_TABLE_FILE_PATH = FILE_STORAGE_PATH + '/hold_table.csv';
+const CLEARENCE_TABLE_FILE_PATH = FILE_STORAGE_PATH + '/current_clearence.csv';
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const CLIENT_FORM_UPLOAD_NAME = 'file';
 const DEBUG = false;
@@ -65,7 +65,7 @@ function processTradeLog(filepath,tradeflag){
       .pipe(replaceStream(/=/g,''))
       .pipe(csv.parse({delimiter: '\t',columns: true}))
       .on('data', function (data) {
-        if(DEBUG) console.log(data);
+          //if(DEBUG) console.log(data);
           let item = {};
           if (data['买卖标志'] == log_trade_flag ) {
               //修改证券代码符合行情系统前缀标注
@@ -77,14 +77,15 @@ function processTradeLog(filepath,tradeflag){
               }
               //使用Map考虑到可能有多笔同代码成交的情况，
               //根据代码做key，然后merge
-              let hash_key = code+"_"+data['成交日期'];
+              let trade_date_pretty_format = data['成交日期'].substr(0,4)+"-"+data['成交日期'].substr(4,2)+"-"+data['成交日期'].substr(6,2);
+              let hash_key = code+"_"+ trade_date_pretty_format;
               item = trade_map.get(hash_key);
               if (!item) {
                   item = {};
                   item.id = hash_key;
                   item.symbol = code;
                   item.name = data['证券名称'];
-                  item.trade_date = data['成交日期'];
+                  item.trade_date = trade_date_pretty_format;
                   item.total_money = parseFloat(data['成交金额']);
                   item.volume = parseFloat(data['成交数量']);
                   item.trade_price = ((item.total_money / item.volume ) * (1+trade_with_tax_ratio)).toFixed(3);
@@ -97,7 +98,7 @@ function processTradeLog(filepath,tradeflag){
           }
         }).on('end',async function(){
                 //merge to existing hold table
-                if(DEBUG) console.log(trade_map);
+                //if(DEBUG) console.log(trade_map);
 
                 //数据备份和创建表头等工作采用同步模式先处理完
                 try {
@@ -115,48 +116,63 @@ function processTradeLog(filepath,tradeflag){
                 let DBHandler = HoldTableDB;
                 if ( tradeflag == "sell") {
                     DBHandler = ClearenceTableDB;
-                    DBHandler.collection.drop();                  
-                }
-                    
-                DBHandler.insertMany([...trade_map.values()]);
+                    DBHandler.deleteMany({},function(err) { 
+                        if(DEBUG) console.log(err); 
+                    });           
+                } 
                 
-                console.log('insert done..')
-
-                //Export to csv for backup....
-                
-                let logfile = fs.createWriteStream(logfilename,{flags: 'w'});
-                if (tradeflag == 'sell') {
-                    logfile.write(log_header+'\n');
-                }
-
-                let trade_date_flag = '';
-                DBHandler.find({}).stream().on('data',function(data){
-                    if (trade_date_flag != data.trade_date ) {
-                        //add blank for easy use
-                        logfile.write('\n');
-                        trade_date_flag = data.trade_date;
+                DBHandler.insertMany([...trade_map.values()],function(err,docs){
+                    if(!err) {
+                        //Export to csv for backup....             
+                        let logfile = fs.createWriteStream(logfilename,{flags: 'w'});
+                        logfile.write(log_header+'\n');
+                        let trade_date_flag = '';                        
+                        
+                        if (tradeflag == 'sell') {
+                            docs.map((data)=>{
+                                if (trade_date_flag != data.trade_date ) {
+                                    //add blank for easy use
+                                    logfile.write('\n');
+                                    trade_date_flag = data.trade_date;
+                                }
+                                const  csv_str = data.id + ',' 
+                                         + data.symbol + ',' 
+                                         + data.name + ',' 
+                                         + data.trade_date + ',' 
+                                         + data.trade_price + ',' 
+                                         + data.volume + ',' 
+                                         + data.total_money +'\n';
+                                logfile.write(csv_str);
+                            });
+                            logfile.end();
+                        } else {
+                            DBHandler.find({},function(err,docs){
+                                if(!err) {
+                                    docs.map((data)=>{
+                                        if (trade_date_flag != data.trade_date ) {
+                                        //add blank for easy use
+                                        logfile.write('\n');
+                                        trade_date_flag = data.trade_date;
+                                        }
+                                        const  csv_str = data.id + ',' 
+                                                + data.symbol + ',' 
+                                                + data.name + ',' 
+                                                + data.trade_date + ',' 
+                                                + data.trade_price + ',' 
+                                                + data.volume + ',' 
+                                                + data.total_money +'\n';
+                                        logfile.write(csv_str);
+                                    });
+                                    logfile.end();   
+                                }
+                            });
+                        }
                     }
-                    const  csv_str = data.id + ',' 
-                                     + data.symbol + ',' 
-                                     + data.name + ',' 
-                                     + data.trade_date + ',' 
-                                     + data.trade_price + ',' 
-                                     + data.volume + ',' 
-                                     + data.total_money +'\n';
-                    logfile.write(csv_str);
-                }).on('end',()=>{
-                    logfile.end();
-
+                });    
+                //delete temp trade log file.                
+                fs.unlink(filepath,function(err){
+                    if(err) return console.log(err);
                 });
-                
-
-                //delete temp trade log file.
-                /*
-                    fs.unlink(filepath,function(err){
-                        if(err) return console.log(err);
-                    });
-                    */
-
     }).on('close', function(){ console.log('something wrong ...'); });
 }
   

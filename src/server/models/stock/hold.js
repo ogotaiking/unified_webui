@@ -7,7 +7,6 @@ const HoldTableSchema = new Schema({
     id: {
         type: String,
         index: true,
-        unique: true
     },
     symbol: {
         type: String,
