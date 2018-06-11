@@ -36,7 +36,7 @@ class HoldTable extends React.Component {
             let newDate = new Date(hold_item.trade_date);
             let T_Delta = ( DateNow - newDate)/1000/3600/24;
             //T+1且大于止损线，或者大于最大持仓天数
-            if (((T_Delta > 1) && (new_item.cum_pctchange > parseFloat(nextProp.stoploss_rate))) || (T_Delta > parseFloat(nextProp.max_hold_day))) {
+            if (((T_Delta > 1) && (new_item.cum_pctchange < -parseFloat(nextProp.stoploss_rate))) || (T_Delta > parseFloat(nextProp.max_hold_day))) {
               let existing_result = result_clearence.get(new_item.id);
               if (!existing_result) {
                 new_item.trade_detail = new_item.trade_date.slice(5) + "("+ new_item.volume.toString()+" 股)";
@@ -93,7 +93,7 @@ class HoldTable extends React.Component {
               let T_Delta = ( DateNow - newDate)/1000/3600/24;
               console.log(new_item,T_Delta,nextProp.clearence_mode,nextProp.max_hold_day,nextProp.stoploss_rate);
               //T+1且大于止损线，或者大于最大持仓天数
-              if (((T_Delta > 1) && (new_item.cum_pctchange > parseFloat(nextProp.stoploss_rate))) || (T_Delta > parseFloat(nextProp.max_hold_day))) {
+              if (((T_Delta > 1) && (new_item.cum_pctchange <  -parseFloat(nextProp.stoploss_rate))) || (T_Delta > parseFloat(nextProp.max_hold_day))) {
                   let existing_result = result_clearence.get(new_item.id);
                   if (!existing_result) {
                       new_item.trade_detail = new_item.trade_date.slice(5) + "("+ new_item.volume.toString()+" 股)";
