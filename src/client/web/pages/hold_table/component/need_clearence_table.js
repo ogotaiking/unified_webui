@@ -15,7 +15,7 @@ class NeedToClearenceTable extends React.Component{
     }
     render() {
         return (
-             <Query query={STOCK_HOLD_TABLE_QUERY}>
+             <Query query={STOCK_HOLD_TABLE_QUERY}  fetchPolicy="network-only">
                 {({loading,error,data})=>{
                     if (loading) return  <LoadingBox/>;
                     if (error) return <ErrorBox title={error.toString()} 

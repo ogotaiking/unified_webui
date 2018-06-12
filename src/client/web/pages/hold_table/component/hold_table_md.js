@@ -30,7 +30,7 @@ class HoldTableMarketData extends React.Component{
     render() {
         const interval = this.props.interval;
         return (
-             <Query query={STOCK_HOLD_STOCK_LIST}>
+             <Query query={STOCK_HOLD_STOCK_LIST} fetchPolicy="network-only">
                 {({loading,error,data})=>{
                     if (loading) return  <LoadingBox/>;
                     if (error) return <ErrorBox title={error.toString()} 

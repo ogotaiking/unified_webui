@@ -87,30 +87,39 @@ class HoldTable extends React.Component {
           new_item.cum_pctchange = ((new_item.current - new_item.hold_price) * 100.0 / new_item.hold_price).toFixed(2);
           new_item.earn = (new_item.current * new_item.volume - new_item.total_money).toFixed(2);
           result.set(new_item.id, new_item);
-          //检测并更新清算表:
-          if (nextProp.clearence_mode) {
-              let newDate = new Date(hold_item.trade_date);
-              let T_Delta = ( DateNow - newDate)/1000/3600/24;
-              console.log(new_item,T_Delta,nextProp.clearence_mode,nextProp.max_hold_day,nextProp.stoploss_rate);
-              //T+1且大于止损线，或者大于最大持仓天数
-              if (((T_Delta > 1) && (new_item.cum_pctchange <  -parseFloat(nextProp.stoploss_rate))) || (T_Delta > parseFloat(nextProp.max_hold_day))) {
-                  let existing_result = result_clearence.get(new_item.id);
-                  if (!existing_result) {
-                      new_item.trade_detail = new_item.trade_date.slice(5) + "("+ new_item.volume.toString()+" 股)";
-                      result_clearence.set(new_item.id,new_item);
-                  } else {
-                    existing_result.trade_detail = existing_result.trade_detail  + ' , ' + new_item.trade_date.slice(5) + "("+ new_item.volume.toString() +" 股)";
-                      existing_result.total_money = existing_result.total_money + new_item.total_money;
-                      existing_result.volume = existing_result.volume + new_item.volume;
-                      //calculate new result...
-                      existing_result.hold_price =  (existing_result.total_money / existing_result.volume).toFixed(3);
-                      existing_result.cum_pctchange = ((new_item.current - existing_result.hold_price) * 100.0 / existing_result.hold_price).toFixed(2);
-                      existing_result.earn = (new_item.current * existing_result.volume - existing_result.total_money).toFixed(2);
-                      result_clearence.set(new_item.id,existing_result);
-                  }
+        } 
+
+        //检测并更新清算表:
+        
+        if (nextProp.clearence_mode) {
+          let new_item = { ...nextProp.market_data.get(hold_item.symbol)  };
+          new_item.trade_date = hold_item.trade_date;
+          new_item.volume = hold_item.volume;
+          new_item.total_money = hold_item.total_money;
+          new_item.hold_price = (hold_item.total_money / hold_item.volume).toFixed(3);
+          new_item.cum_pctchange = ((new_item.current - new_item.hold_price) * 100.0 / new_item.hold_price).toFixed(2);
+          new_item.earn = (new_item.current * new_item.volume - new_item.total_money).toFixed(2);
+          let newDate = new Date(hold_item.trade_date);
+          let T_Delta = ( DateNow - newDate)/1000/3600/24;
+          //console.log(new_item,T_Delta,nextProp.clearence_mode,nextProp.max_hold_day,nextProp.stoploss_rate);
+          //T+1且大于止损线，或者大于最大持仓天数
+          if (((T_Delta > 1) && (new_item.cum_pctchange <  -parseFloat(nextProp.stoploss_rate))) || (T_Delta > parseFloat(nextProp.max_hold_day))) {
+              let existing_result = result_clearence.get(new_item.id);
+              if (!existing_result) {
+                  new_item.trade_detail = new_item.trade_date.slice(5) + "("+ new_item.volume.toString()+" 股)";
+                  result_clearence.set(new_item.id,new_item);
+              } else {
+                existing_result.trade_detail = existing_result.trade_detail  + ' , ' + new_item.trade_date.slice(5) + "("+ new_item.volume.toString() +" 股)";
+                  existing_result.total_money = existing_result.total_money + new_item.total_money;
+                  existing_result.volume = existing_result.volume + new_item.volume;
+                  //calculate new result...
+                  existing_result.hold_price =  (existing_result.total_money / existing_result.volume).toFixed(3);
+                  existing_result.cum_pctchange = ((new_item.current - existing_result.hold_price) * 100.0 / existing_result.hold_price).toFixed(2);
+                  existing_result.earn = (new_item.current * existing_result.volume - existing_result.total_money).toFixed(2);
+                  result_clearence.set(new_item.id,existing_result);
               }
-          }          
-        }
+          }
+        }  
       });
       if (notChangeFlag) {
         return { isupdate : false };
@@ -123,6 +132,7 @@ class HoldTable extends React.Component {
       }
     }
   }
+  
   shouldComponentUpdate(nextProps, nextState) {
       return nextState.isupdate;
   }

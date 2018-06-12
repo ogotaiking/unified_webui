@@ -28,7 +28,7 @@ class HoldTablePage extends React.Component{
                 <Content>
                     <HoldTableMarketData interval={15000}/>
                     <HoldTableContainer/>
-                    <NeedToClearenceTable stoploss_rate="5.0" max_hold_day="14" />
+                    <NeedToClearenceTable stoploss_rate="5.0" max_hold_day="15" />
 
                     <div>指数行情</div>
                     <StockIdxSubWrap symbol_list={index_list}>
