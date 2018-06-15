@@ -33,10 +33,17 @@ class HoldTable extends React.Component {
           result.set(new_item.id, new_item);
           //检测并更新清算表:
           if (nextProp.clearence_mode) {
-            let newDate = new Date(hold_item.trade_date);
-            let T_Delta = ( DateNow - newDate)/1000/3600/24;
+            const TRADING_DAY_ARRAY = nextProp.trading_day;
+            const MAX_HOLD_DATE = new Date(TRADING_DAY_ARRAY[0]);
+            const CURRENT_TRADING_DAY = new Date(TRADING_DAY_ARRAY[TRADING_DAY_ARRAY.length-1]);
+
+            let holdDate = new Date(hold_item.trade_date);
+            let MAX_HOLD_DAY_VALIDATE =  MAX_HOLD_DATE >= holdDate;
+            let T_PLUS_ONE_DAY_VALIDATE = CURRENT_TRADING_DAY > holdDate;
+            let STOP_LOSS_VALIDATE = new_item.cum_pctchange < -parseFloat(nextProp.stoploss_rate);
+
             //T+1且大于止损线，或者大于最大持仓天数
-            if (((T_Delta > 1) && (new_item.cum_pctchange < -parseFloat(nextProp.stoploss_rate))) || (T_Delta > parseFloat(nextProp.max_hold_day))) {
+            if ( ( T_PLUS_ONE_DAY_VALIDATE && STOP_LOSS_VALIDATE) || MAX_HOLD_DAY_VALIDATE ) {
               let existing_result = result_clearence.get(new_item.id);
               if (!existing_result) {
                 new_item.trade_detail = new_item.trade_date.slice(5) + "("+ new_item.volume.toString()+" 股)";
@@ -99,11 +106,19 @@ class HoldTable extends React.Component {
           new_item.hold_price = (hold_item.total_money / hold_item.volume).toFixed(3);
           new_item.cum_pctchange = ((new_item.current - new_item.hold_price) * 100.0 / new_item.hold_price).toFixed(2);
           new_item.earn = (new_item.current * new_item.volume - new_item.total_money).toFixed(2);
-          let newDate = new Date(hold_item.trade_date);
-          let T_Delta = ( DateNow - newDate)/1000/3600/24;
-          //console.log(new_item,T_Delta,nextProp.clearence_mode,nextProp.max_hold_day,nextProp.stoploss_rate);
+          
+          const TRADING_DAY_ARRAY = nextProp.trading_day;
+          const MAX_HOLD_DATE = new Date(TRADING_DAY_ARRAY[0]);
+          const CURRENT_TRADING_DAY = new Date(TRADING_DAY_ARRAY[TRADING_DAY_ARRAY.length-1]);
+
+          let holdDate = new Date(hold_item.trade_date);
+          let MAX_HOLD_DAY_VALIDATE =  MAX_HOLD_DATE >= holdDate;
+          let T_PLUS_ONE_DAY_VALIDATE = CURRENT_TRADING_DAY > holdDate;
+          let STOP_LOSS_VALIDATE = new_item.cum_pctchange < -parseFloat(nextProp.stoploss_rate);
+
           //T+1且大于止损线，或者大于最大持仓天数
-          if (((T_Delta > 1) && (new_item.cum_pctchange <  -parseFloat(nextProp.stoploss_rate))) || (T_Delta > parseFloat(nextProp.max_hold_day))) {
+          if ( ( T_PLUS_ONE_DAY_VALIDATE && STOP_LOSS_VALIDATE) || MAX_HOLD_DAY_VALIDATE ) {
+
               let existing_result = result_clearence.get(new_item.id);
               if (!existing_result) {
                   new_item.trade_detail = new_item.trade_date.slice(5) + "("+ new_item.volume.toString()+" 股)";

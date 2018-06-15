@@ -31,6 +31,7 @@ type Query {
   HOLD_STOCK_LIST:[String!]!
   CLEARENCE_TABLE: [TradeLog_Type!]!
   CLEARENCE_STOCK_LIST:[String!]!
+  TRADING_DAY(num: Int):[String!]!
 }
 type Mutation {
   UPDATE_HOLD_TABLE: [TradeLog_Type!]!

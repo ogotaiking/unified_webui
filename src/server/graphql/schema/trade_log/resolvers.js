@@ -1,10 +1,9 @@
 import fs from 'fs';
 import csv from 'csv';
+import axios from 'axios';
 import { PubSub,withFilter } from 'graphql-subscriptions';
 import HoldTableDB from '../../../models/stock/hold';
 import ClearenceTableDB from '../../../models/stock/clearence';
-
-
 
 const pubsub = new PubSub();
 const CHANNEL = "TRADE_LOG_DATA";
@@ -66,6 +65,21 @@ const CLEARENCE_TABLE = async (root, args, ctx, info) =>{
   return await ClearenceTableDB.find({});
 };
 
+
+
+const TRADING_DAY = async(root,args,ctx,info) => {
+  const url = 'http://money.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_MarketData.getKLineData?symbol=sh000001&scale=240&ma=no&datalen=' + args.num.toString();
+  const response = await axios.get(url);
+  let data = response.data;
+  data = data.replace(/day/g,'"day"').replace(/open/g,'"open"').replace(/high/g,'"high"').replace(/low/g,'"low"').replace(/close/g,'"close"').replace(/volume/g,'"volume"');
+  let a = JSON.parse(data);
+  let result = a.map((item)=>{ 
+      return item.day; 
+  });
+  
+  return result;
+}
+
 const REMOVE_HOLD_TABLE_ITEM = async(root, args, ctx, info) =>{
     if ( ctx.state.user.privilegeLevel > 20 ) {
       let result = await HoldTableDB.deleteMany({id: args.id});
@@ -89,6 +103,7 @@ const resolvers = {
     HOLD_STOCK_LIST:HOLD_STOCK_LIST,
     CLEARENCE_TABLE: CLEARENCE_TABLE,
     CLEARENCE_STOCK_LIST:CLEARENCE_STOCK_LIST,
+    TRADING_DAY:TRADING_DAY,
   },
   Mutation: {
     REMOVE_HOLD_TABLE_ITEM: REMOVE_HOLD_TABLE_ITEM
