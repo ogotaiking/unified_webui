@@ -45,8 +45,8 @@ export const STOCK_HOLD_STOCK_LIST =gql`query{
   HOLD_STOCK_LIST}`;
 
 
-export const STOCK_HOLD_TABLE_MUTATION_DELETE = gql`mutation REMOVE_HOLD_TABLE_ITEM($data: [String!]!){
-    REMOVE_HOLD_TABLE_ITEM(id: $data) 
+export const STOCK_HOLD_TABLE_MUTATION_DELETE = gql`mutation REMOVE_HOLD_TABLE_ITEM($id_list: [String!]!){
+    REMOVE_HOLD_TABLE_ITEM(id: $id_list) 
     {
       NUMBER
       OK

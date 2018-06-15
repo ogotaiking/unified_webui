@@ -8,10 +8,10 @@ class UploadTradeLog extends React.Component{
     render() {     
         return (
                 <Content>
-                    上传交易数据
+                    上传买入交易数据
                    <FileUploader accept=".csv,.xls" action="/api/tradelog/upload/buy" />
 
-                   Sell
+                   上传卖出交易数据
                    <FileUploader accept=".csv,.xls" action="/api/tradelog/upload/sell" />
 
 
