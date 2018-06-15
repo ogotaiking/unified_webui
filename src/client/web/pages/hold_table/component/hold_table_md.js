@@ -6,24 +6,29 @@ import LoadingBox from '../../../component/util/loadingbox';
 import ErrorBox from '../../../component/util/errorbox';
 
 class HoldTableMarketData extends React.Component{
-    returnRenderJSX(data,interval) {       
+    returnRenderJSX(data,interval) {               
         let hash_grp_num = Math.round(data.length / 8);
         let hash_map = new Map();
-        for (let i = 0; i < hash_grp_num; i++) {
-            hash_map.set(i,[]);
-        }
-        if (data instanceof Array) {
-            data.map((item)=>{
-                let key = Math.floor(Math.random() * Math.floor(hash_grp_num));
-                let bucket = hash_map.get(key);
-                bucket.push(item);
-                hash_map.set(key,bucket);
-            });
+        if (hash_grp_num == 0) {
+            hash_map.set(0,data);
+        } else {
+            for (let i = 0; i < hash_grp_num; i++) {
+                hash_map.set(i,[]);
+            }
+            if (data instanceof Array) {
+                data.map((item)=>{
+                    let key = Math.floor(Math.random() * Math.floor(hash_grp_num));
+                    let bucket = hash_map.get(key);
+                    bucket.push(item);
+                    hash_map.set(key,bucket);
+                });
+            }
         }
         //console.log(hash_map,data);
         let jsxresult= [...hash_map.values()].map((item,key)=>{
-            return (<StockData key={key} symbol_list = {item} interval={interval}/> );
-
+            if (item.length > 0 ) {
+                return (<StockData key={key} symbol_list = {item} interval={interval}/> );
+            }
         });
         return jsxresult;
     }

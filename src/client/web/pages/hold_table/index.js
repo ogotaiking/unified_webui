@@ -1,22 +1,18 @@
 import React   from 'react';
-import {withApollo, Query } from 'react-apollo';
+import {withApollo} from 'react-apollo';
 import Content from '../../component/layout/content';
 
 import StockIdxData from '../../../_service/sina_market_data/md_fetch_agent/stock_index';
 import StockIdxSubWrap from '../../../_service/sina_market_data/md_sub/stock_index';
 import IndexTable from '../../component/stock_table/container/index';
 
-
 import HoldTableMarketData from './component/hold_table_md';
 import HoldTableContainer from './component/hold_table';
 import NeedToClearenceTable from './component/need_clearence_table';
 
-
-
 import StockSubWrap from '../../../_service/sina_market_data/md_sub/stock';
 import StockTable from '../../component/stock_table/container/stock';
 import StockData from '../../../_service/sina_market_data/md_fetch_agent/stock';
-
 
 class HoldTablePage extends React.Component{
     render() {
@@ -28,7 +24,7 @@ class HoldTablePage extends React.Component{
                 <Content>
                     <HoldTableMarketData interval={15000}/>
                     <HoldTableContainer/>
-                    <NeedToClearenceTable stoploss_rate="5.0" max_hold_day="15" />
+                    <NeedToClearenceTable stoploss_rate="5.0" max_hold_day="4" />
 
                     <div>指数行情</div>
                     <StockIdxSubWrap symbol_list={index_list}>

@@ -69,6 +69,13 @@ const CLEARENCE_TABLE = async (root, args, ctx, info) =>{
   return await ClearenceTableDB.find({});
 };
 
+const REMOVE_HOLD_TABLE_ITEM = async(root, args, ctx, info) =>{
+    //console.log(ctx.state.user._id,args.id);
+    let result = await HoldTableDB.deleteMany({id: args.id});
+
+    return { NUMBER : result.n, 
+             OK: result.ok };
+};
 
 
 const resolvers = {
@@ -80,7 +87,7 @@ const resolvers = {
     CLEARENCE_STOCK_LIST:CLEARENCE_STOCK_LIST,
   },
   Mutation: {
-
+    REMOVE_HOLD_TABLE_ITEM: REMOVE_HOLD_TABLE_ITEM
   },
   Subscription: {
     
