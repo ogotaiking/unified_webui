@@ -147,7 +147,7 @@ class HoldTable extends React.Component {
   }
 
   render() {
-    console.log(window.innerWidth,window.innerHeight);
+    //console.log(window.innerWidth,window.innerHeight);
     const DataToRender = this._DataToRender();
     let sum_money = 0.0;
     let sum_ratio = 0.0;
