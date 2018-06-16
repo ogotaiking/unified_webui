@@ -44,7 +44,6 @@ export const STOCK_NEED_CLEARENCE_TABLE_QUERY =gql`query STOCK_NEED_CLEARENCE_TA
 export const STOCK_HOLD_STOCK_LIST =gql`query{
   HOLD_STOCK_LIST}`;
 
-
 export const STOCK_HOLD_TABLE_MUTATION_DELETE = gql`mutation REMOVE_HOLD_TABLE_ITEM($id_list: [String!]!){
     REMOVE_HOLD_TABLE_ITEM(id: $id_list) 
     {

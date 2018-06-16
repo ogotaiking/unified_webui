@@ -13,10 +13,6 @@ class UploadTradeLog extends React.Component{
 
                    上传卖出交易数据
                    <FileUploader accept=".csv,.xls" action="/api/tradelog/upload/sell" />
-
-
-
-
                 </Content>
         );
     } 

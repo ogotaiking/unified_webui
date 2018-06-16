@@ -96,7 +96,7 @@ const sidebarMenu = [
     Clearence_Table,
     Future_MD,
     Option_MD,
-    FOO
+    //FOO
 ];
 
 export default sidebarMenu;

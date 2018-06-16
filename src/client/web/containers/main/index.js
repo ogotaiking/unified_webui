@@ -11,6 +11,7 @@ import '../login/index.scss';
 const Home = connectRoute(asyncComponent(() => import("../../pages/home")));
 const User = connectRoute(asyncComponent(() => import("../../pages/user")));
 const HoldTable = connectRoute(asyncComponent(() => import("../../pages/hold_table")));
+const ClearenceTable = connectRoute(asyncComponent(() => import("../../pages/clearence")));
 const UploadTradeLog = connectRoute(asyncComponent(() => import("../../pages/upload_tradelog")));
 
 
@@ -68,6 +69,7 @@ class Main extends React.Component{
                     <Redirect exact from="/order" to="/order/index"/>
                     <Route path="/user" component={User}/>
                     <Route path="/hold_table" component={HoldTable}/>
+                    <Route path="/clearence" component={ClearenceTable}/>
                     <Route path="/upload_tradelog" component={UploadTradeLog}/>
                     <Redirect from="*" to="/"/>
                 </Switch>

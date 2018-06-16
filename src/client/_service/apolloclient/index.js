@@ -67,7 +67,7 @@ const link = split(
 const client = new ApolloClient({
   link,
   cache: new InMemoryCache(),
-  connectToDevTools: true,
+  //connectToDevTools: true, #debug for apollo connection
 });
 
 export default client;
