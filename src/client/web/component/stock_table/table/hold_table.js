@@ -1,4 +1,5 @@
 import React from 'react';
+import {CSVLink} from 'react-csv';
 import './table.scss';
 
 class Table extends React.PureComponent{
@@ -110,6 +111,9 @@ class Table extends React.PureComponent{
                 <td>{this.props.sum_ratio}</td>
                 <td>本期盈亏</td>
                 <td>{this.props.sum_earn}</td>
+                <td><CSVLink data={this.props.dataSource} filename={this.props.chartname+'.csv'} >
+                export
+            </CSVLink></td>
             </tr>
         );
 

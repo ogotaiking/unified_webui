@@ -1,7 +1,7 @@
 import React   from 'react';
 import { Query } from 'react-apollo';
 import {CSVLink} from 'react-csv';
-import { Icon} from 'antd';
+import { Button} from 'antd';
 
 import { STOCK_HOLD_TABLE_QUERY } from '../../../../_service/stock/graphql/holdtable';
 import StockSubWrap from '../../../../_service/sina_market_data/md_sub/stock';
@@ -35,11 +35,8 @@ class HoldTableContainer extends React.Component{
         //console.log(hash_map,result_jsx);<Icon type="download" />
         return (  
         <div style={{textAlign:'right'}}>
-            <CSVLink data={data.HOLD_TABLE} 
-                filename={"holdtable.csv"} 
-                className="btn btn-primary"  
-                style={{marginBottom: '20px'}} >
-                <Icon type="download" />下载持仓表
+            <CSVLink data={data.HOLD_TABLE}filename={"holdtable.csv"} >
+                <Button type="primary" icon="download" size="small" style={{marginBottom: '20px'}} >下载持仓表 </Button>
             </CSVLink>
             <StockSubWrap symbol_list={data.HOLD_STOCK_LIST} >
                 {result_jsx.map((item)=>{return item;})}

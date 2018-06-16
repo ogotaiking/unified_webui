@@ -1,7 +1,7 @@
 import React   from 'react';
 import { Query } from 'react-apollo';
 import {CSVLink} from 'react-csv';
-import {Icon} from 'antd';
+import {Icon,Button} from 'antd';
 import { STOCK_CLEARENCE_TABLE_QUERY } from '../../../_service/stock/graphql/clearence';
 import StockSubWrap from '../../../_service/sina_market_data/md_sub/stock';
 import TradeLogTable from '../../component/stock_table/container/trade_log';
@@ -36,12 +36,9 @@ class ClearenceTableContainer extends React.Component{
 
         return (  
                   <div style={{textAlign:'right'}}>
-            <CSVLink data={data.CLEARENCE_TABLE} 
-                            filename={"clearence.csv"} 
-                            className="btn btn-primary"  
-                            style={{marginBottom: '20px'}} >
-                            <Icon type="download" />下载清仓数据表
-                        </CSVLink>
+            <CSVLink data={data.CLEARENCE_TABLE} filename={"clearence.csv"} >
+                <Button type="primary" icon="download" size="small" style={{marginBottom: '20px'}} >下载清仓数据表</Button>
+            </CSVLink>
         <StockSubWrap symbol_list={data.CLEARENCE_STOCK_LIST}>
             {result_jsx.map((item)=>{return item;})}
         </StockSubWrap>
