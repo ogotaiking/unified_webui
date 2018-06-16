@@ -1,5 +1,6 @@
 import React   from 'react';
 import {withApollo} from 'react-apollo';
+
 import Content from '../../component/layout/content';
 
 import StockIdxData from '../../../_service/sina_market_data/md_fetch_agent/stock_index';
