@@ -1,4 +1,6 @@
 import React from 'react';
+import {CSVLink} from 'react-csv';
+import {Icon } from 'antd';
 import './table.scss';
 
 class Table extends React.PureComponent{
@@ -103,7 +105,12 @@ class Table extends React.PureComponent{
 
         return (
             <table className="pt_table">
-                <caption >{this.props.chartname}</caption>
+                <caption >
+                <i className="fa fa-signal"/><span style={{marginLeft: '5px'}}>{this.props.chartname}</span>
+                <CSVLink data={this.props.dataSource} filename={this.props.chartname+'.csv'} style={{marginLeft: '5px'}} >
+                    <Icon type="export" />
+                    </CSVLink>
+                </caption>
                 <thead>
                     <tr>
                         {thContent}
