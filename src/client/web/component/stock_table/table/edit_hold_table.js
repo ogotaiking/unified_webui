@@ -1,13 +1,20 @@
 import React from 'react';
 import {CSVLink} from 'react-csv';
-import {Icon } from 'antd';
+import {Icon ,Checkbox,Button} from 'antd';
 import './table.scss';
 
 class Table extends React.PureComponent{
+    constructor(props){
+        super(props);
+        this.state = {
+            select_log: []
+        };
+        this.onChange = this.onChange.bind(this);
+    }
 
     _parseTableHeader() {
         let header = this.props.columns;
-        return (
+        return (       
             header.map((item,key)=>{
                 if (item.style) {
                     return (<th key={key} style={item.style}>{item.title}</th>);
@@ -30,46 +37,30 @@ class Table extends React.PureComponent{
         });
     }
 
-    _rowStyle(val){
-        let styleclass = null;
-        switch(true) {
-            case val > 9.5:
-                styleclass = "up_stop";
-                break;
-            case ((val > 0.0) && (val<=9.5)):
-                styleclass = "up";
-                break;
-            case ((val > -4.0) && (val < 0)):
-                styleclass = "down";
-                break;
-            case ((val > -5.0) && (val <= -4.0)):
-                styleclass = "stoploss_warn";
-                break;
-            case val < -5.0:
-                styleclass = "stoploss";
-                break;
-            default:
-                styleclass = null;
-        }
-        return styleclass;
+
+    onChange(checkedValues){
+        console.log("Select:"+checkedValues);
+        this.setState({select_log: checkedValues});
     }
 
-    _parseRowData(data,columns,key) {
-        let styleclass = this._rowStyle(data.pctchange);       
+    _parseRowData(data,columns,key) {    
         let tdContent = this._parseCellData(data,columns,key);
-        if (styleclass != null) {
+        const select_stock = this.state.select_log;
+        if (select_stock.indexOf(data.id)>-1) {
             return (
-                <tr key={key} className={styleclass}>
-                {tdContent}
-                </tr>
+                <tr key={key} className="stoploss">
+                 <td key={data.id}><Checkbox value={data.id}/></td>
+                {tdContent}</tr>
             );
         } else {
             return (
-                <tr key={key}>{tdContent}</tr>
+                <tr key={key}>
+                 <td key={data.id}><Checkbox value={data.id}/></td>
+                {tdContent}</tr>
             );
         }
-
-    }
+        
+   }
 
     _parseTableData() {
         let data = this.props.dataSource;
@@ -80,7 +71,7 @@ class Table extends React.PureComponent{
                 fontSize: '20px',
                 height:'80px '
             };
-            return (<tr><td colSpan={header.length} style={nodata_style}>No Data</td></tr>);
+            return (<tr><td colSpan={header.length+1} style={nodata_style}>No Data</td></tr>);
         } else {
             return (
                 data.map((item,key)=>{
@@ -111,26 +102,32 @@ class Table extends React.PureComponent{
     render() {
         const thContent = this._parseTableHeader();
         const DataContent = this._parseTableData();
-        const footContent = null;
+        const footContent = <tr><td colSpan={this.props.columns.length+1} style={{textAlign:'center', marginRight: '20px'}}><Button type="danger" size="small" style={{width:'100%'}}>删除已选择的交易记录</Button></td></tr>;
         const captionContent = this._captionRender(this.props.chartname,this.props.dataSource);
 
         return (
+            <form>
+            <Checkbox.Group style={{ width: '100%' }} onChange={this.onChange}>
             <table className="pt_table">
                 {captionContent}
                 <thead>
                     <tr>
+                        <th key="action">Select</th>
                         {thContent}
                     </tr>
                 </thead>
-
                 <tbody>
                     {DataContent}                                                                       
                 </tbody>
                 <tfoot>
                     {footContent}
                 </tfoot>
-
-            </table>
+            </table> 
+            
+            </Checkbox.Group>
+            
+            </form>
+            
         );
     }
 

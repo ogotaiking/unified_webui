@@ -1,7 +1,7 @@
 import React   from 'react';
 import { Query } from 'react-apollo';
 import {CSVLink} from 'react-csv';
-import {Icon,Button} from 'antd';
+import {Button} from 'antd';
 import { STOCK_CLEARENCE_TABLE_QUERY } from '../../../_service/stock/graphql/clearence';
 import StockSubWrap from '../../../_service/sina_market_data/md_sub/stock';
 import TradeLogTable from '../../component/stock_table/container/trade_log';

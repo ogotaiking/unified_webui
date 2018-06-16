@@ -48,6 +48,7 @@ type Mutation {
   UPDATE_HOLD_TABLE: [HOLD_TradeLog_Type!]!
   REMOVE_HOLD_TABLE_ITEM(id: [String!]!): OPERATION_LOG
   UPDATE_CLEARENCE_TABLE: [CLEARENCE_TradeLog_Type!]!
+  REMOVE_CLEARENCE_TABLE_ITEM(id: [String!]!): OPERATION_LOG
 }
 type Subscription {
   HOLD_TABLE: [HOLD_TradeLog_Type!]!

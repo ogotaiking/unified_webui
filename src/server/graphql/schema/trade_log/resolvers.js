@@ -95,6 +95,20 @@ const REMOVE_HOLD_TABLE_ITEM = async(root, args, ctx, info) =>{
     
 };
 
+const REMOVE_CLEARENCE_TABLE_ITEM = async(root, args, ctx, info) =>{
+  if ( ctx.state.user.privilegeLevel > 20 ) {
+    let result = await ClearenceTableDB.deleteMany({id: args.id});
+    return { NUMBER : result.n, 
+      OK: result.ok };
+
+  } else {
+    return {
+      NUMBER : 0, 
+      OK: 0 
+    };
+  }
+  
+};
 
 const resolvers = {
   Query: {
@@ -102,11 +116,12 @@ const resolvers = {
     HOLD_TABLE_SUMMARY: HOLD_TABLE_SUMMARY,
     HOLD_STOCK_LIST:HOLD_STOCK_LIST,
     CLEARENCE_TABLE: CLEARENCE_TABLE,
-    CLEARENCE_STOCK_LIST:CLEARENCE_STOCK_LIST,
+    CLEARENCE_STOCK_LIST:CLEARENCE_STOCK_LIST,    
     TRADING_DAY:TRADING_DAY,
   },
   Mutation: {
-    REMOVE_HOLD_TABLE_ITEM: REMOVE_HOLD_TABLE_ITEM
+    REMOVE_HOLD_TABLE_ITEM: REMOVE_HOLD_TABLE_ITEM,
+    REMOVE_CLEARENCE_TABLE_ITEM:REMOVE_CLEARENCE_TABLE_ITEM,
   },
   Subscription: {
     
