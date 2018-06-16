@@ -1,5 +1,5 @@
 import React   from 'react';
-import {withApollo} from 'react-apollo';
+
 import Content from '../../component/layout/content';
 
 import HoldTableMarketData from '../hold_table/component/hold_table_md';
@@ -7,7 +7,16 @@ import NeedToClearenceTable from '../hold_table/component/need_clearence_table';
 import ClearneceLogTable from './clearence_log_container';  
 
 
-class HoldTablePage extends React.Component{
+class ClearenceTablePage extends React.Component{
+    constructor(props){
+        super(props);
+        this.Downloadlog = this.Downloadlog.bind(this);
+    }
+
+    Downloadlog=()=>{
+        console.log('clicked....');
+        this.props.history.push(`/api/tradelog/download/clearence_table`);
+    }
     render() {
         return (
                 <Content>
@@ -22,5 +31,5 @@ class HoldTablePage extends React.Component{
     } 
 }
   
-export default withApollo(HoldTablePage);
+export default ClearenceTablePage;
 

@@ -242,9 +242,9 @@ function uploadHandler(tradeflag) {
 export default (router) => {
     router.post('/upload/buy', isAuthenticated( null , 10 ,true ), uploadHandler('buy'));
     router.post('/upload/sell', isAuthenticated( null , 10 ,true ), uploadHandler('sell'));
-    router.get('/download/clearence_table',isAuthenticated(), async (ctx) => {
+    /*router.get('/download/clearence_table',isAuthenticated(), async (ctx) => {
         const path = `${CLEARENCE_TABLE_FILE_PATH}`;
         ctx.attachment(decodeURI(path));
         await sendfile(ctx, path);
-    });
+    });*/
 };
