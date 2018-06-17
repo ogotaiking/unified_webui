@@ -12,7 +12,7 @@ const Home = connectRoute(asyncComponent(() => import("../../pages/home")));
 const User = connectRoute(asyncComponent(() => import("../../pages/user")));
 const HoldTable = connectRoute(asyncComponent(() => import("../../pages/hold_table")));
 const ClearenceTable = connectRoute(asyncComponent(() => import("../../pages/clearence")));
-const UploadTradeLog = connectRoute(asyncComponent(() => import("../../pages/upload_tradelog")));
+const EditTradelog = connectRoute(asyncComponent(() => import("../../pages/edit_tradelog")));
 
 
 class Main extends React.Component{
@@ -70,7 +70,7 @@ class Main extends React.Component{
                     <Route path="/user" component={User}/>
                     <Route path="/hold_table" component={HoldTable}/>
                     <Route path="/clearence" component={ClearenceTable}/>
-                    <Route path="/upload_tradelog" component={UploadTradeLog}/>
+                    <Route path="/edit_tradelog" component={EditTradelog}/>
                     <Redirect from="*" to="/"/>
                 </Switch>
          </ClientLayout>

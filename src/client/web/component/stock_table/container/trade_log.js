@@ -1,6 +1,5 @@
 import React from 'react';
-//import Table from '../table/stock_table';
-import Table from '../table/edit_hold_table';
+import Table from '../table/stock_table';
 
 class TradeLogTable extends React.Component { 
   constructor(props){
