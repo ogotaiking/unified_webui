@@ -46,7 +46,7 @@ const wsLink = new WebSocketLink({
 // create my middleware using the applyMiddleware method from subscriptions-transport-ws
 const subscriptionMiddleware = {
   applyMiddleware (options, next) {
-    console.log(options);
+    //console.log(options);
     next();
   }
 }

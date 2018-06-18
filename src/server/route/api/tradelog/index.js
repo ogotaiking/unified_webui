@@ -101,6 +101,7 @@ function processTradeLog(filepath,tradeflag){
                 //if(DEBUG) console.log(trade_map);
 
                 //数据备份和创建表头等工作采用同步模式先处理完
+                /*-----No need to backup csv...
                 try {
                     let stats = fs.statSync(logfilename);
                     if(DEBUG) console.log('文件存在');
@@ -112,6 +113,7 @@ function processTradeLog(filepath,tradeflag){
                     fs.writeFileSync(logfilename,log_header+'\n',{flags: 'w'});
                     if(DEBUG) console.log('Done....');
                 }
+                -------------------------------*/
 
                 let DBHandler = HoldTableDB;
                 if ( tradeflag == "sell") {
@@ -123,6 +125,7 @@ function processTradeLog(filepath,tradeflag){
                 
                 DBHandler.insertMany([...trade_map.values()],function(err,docs){
                     if(!err) {
+                        /*-----No need to backup csv...
                         //Export to csv for backup....             
                         let logfile = fs.createWriteStream(logfilename,{flags: 'w'});
                         logfile.write(log_header+'\n');
@@ -167,6 +170,7 @@ function processTradeLog(filepath,tradeflag){
                                 }
                             });
                         }
+                        -------------------------------*/
                     }
                 });    
                 //delete temp trade log file.                
