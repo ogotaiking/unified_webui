@@ -4,7 +4,7 @@
 
 const UserMenu = {
     key: 'user',
-    name: 'willupdated_by_system_loginname',
+    name: '用户管理',
     icon: 'user',
     children: [{
         key: 'settings',
