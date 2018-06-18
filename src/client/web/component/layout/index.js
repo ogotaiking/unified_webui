@@ -1,16 +1,13 @@
 import React from 'react';
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
-import {  Redirect, Link } from 'react-router-dom';
+import { Layout } from 'antd';
 import LayoutSiderMenu from './siderMenu';
 import LayoutFooter from './footer';
 import LayoutHeader from './header';
+import NarrowLayoutHeader from './s_header';
 import Logo  from './logo';
 import TransitionAnimation from '../../component/util/transition';
 
-
-
-
-const { Header, Content,  Sider } = Layout;
+const {  Content,  Sider } = Layout;
 
 class ClientLayout extends React.Component {
 
@@ -26,7 +23,22 @@ class ClientLayout extends React.Component {
     this.setState({ collapsed });
   }
   render() {
-
+    if (window.screen.width < 1100) {
+      return (
+        <TransitionAnimation>
+        <Layout style={{ minHeight: '100vh' }}>
+          <Layout>
+              <NarrowLayoutHeader username={this.props.username} userpriv={this.props.userpriv} />
+              <Content style={{ margin: '0 16px' }}>
+              {this.props.children} 
+            </Content>
+            <LayoutFooter />
+          </Layout>
+        </Layout>
+        </TransitionAnimation>
+      );
+    }
+    console.log(window.screen.width);
     return (
       <TransitionAnimation>
       <Layout style={{ minHeight: '100vh' }}>

@@ -20,22 +20,22 @@ const UserMenu = {
 const MODIFY_TRADE_LOG ={
     key: 'edit_tradelog',
     name: '修改交易记录',
-    icon: 'play-circle',
+    icon: 'database',
     priv: 10,
     children: [{
         key: 'upload_tradelog',
         name: '上传交易信息',
-        icon: 'android',
+        icon: 'solution',
         priv: 10
     },{
         key: 'edit_hold_tradelog',
         name: '修改持仓数据',
-        icon: 'android',
+        icon: 'solution',
         priv: 10
     },{
         key: 'edit_clearence_tradelog',
         name: '修改清仓数据',
-        icon: 'android',
+        icon: 'form',
         priv: 10
     }]
     

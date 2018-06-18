@@ -2,10 +2,10 @@ import React from 'react';
 import {CSVLink} from 'react-csv';
 import {Icon ,Checkbox,Button} from 'antd';
 import {graphql ,withApollo} from 'react-apollo';
-import { STOCK_CLEARENCE_TABLE_MUTATION_DELETE } from '../../../../_service/stock/graphql/clearence';
+import { STOCK_HOLD_TABLE_MUTATION_DELETE } from '../../../../_service/stock/graphql/holdtable';
 import './table.scss';
 
-class EditClearenceTradeLogTable extends React.PureComponent{
+class EditHoldTradeLogTable extends React.PureComponent{
     constructor(props){
         super(props);
         this.state = {
@@ -69,18 +69,19 @@ class EditClearenceTradeLogTable extends React.PureComponent{
         if (select_stock.indexOf(data.id)>-1) {
             return (
                 <tr key={key} className="stoploss">
+                
                 <td key={data.id}><Checkbox value={data.id}/></td>
-                <td key={data.id+'A'}>证券卖出</td>
+                <td key={data.id+'A'}>证券买入</td>
                 {tdContent}
                 </tr>
             );
         } else {
             return (
                 <tr key={key}>
-                <td key={data.id}><Checkbox value={data.id}/></td>
-                <td key={data.id+'A'}>证券卖出</td>
-                {tdContent}
-                </tr>
+                <td key={data.id}><Checkbox value={data.id}/></td> 
+                <td key={data.id+'A'}>证券买入</td>
+                {tdContent}</tr>
+                
             );
         }
         
@@ -158,8 +159,8 @@ class EditClearenceTradeLogTable extends React.PureComponent{
                             <tr>
                             <th key="action">Select</th>
                             <th key="action2">交易类型</th>
-                            {thContent}
-                                
+                                {thContent}
+
                              </tr>
                          </thead>
                          <tbody>
@@ -180,5 +181,5 @@ class EditClearenceTradeLogTable extends React.PureComponent{
     }
 
 }
-export default graphql(STOCK_CLEARENCE_TABLE_MUTATION_DELETE,{name: 'delete_tradelog'})(withApollo(EditClearenceTradeLogTable));
+export default graphql(STOCK_HOLD_TABLE_MUTATION_DELETE,{name: 'delete_tradelog'})(withApollo(EditHoldTradeLogTable));
 

@@ -1,15 +1,18 @@
 import React   from 'react';
 import { Query } from 'react-apollo';
-import {Button} from 'antd';
-import { STOCK_CLEARENCE_TABLE_QUERY } from '../../../_service/stock/graphql/clearence';
+import { Collapse } from 'antd';
+import { STOCK_HOLD_TABLE_QUERY } from '../../../_service/stock/graphql/holdtable';
 import LoadingBox from '../../component/util/loadingbox';
 import ErrorBox from '../../component/util/errorbox';
 import Content from '../../component/layout/content';
-import EditClearenceTradeLogTable from './component/mutation_clearence';
+import EditHoldTradeLogTable from './component/mutation_hold';
 
+import HoldTableMarketData from '../hold_table/component/hold_table_md';
+import NeedToClearenceTable from '../hold_table/component/need_clearence_table';
 
+const Panel = Collapse.Panel;
 
-class EditClearenceLog extends React.Component{
+class EditHoldLog extends React.Component{
 
     constructor(props){
         super(props);
@@ -50,8 +53,8 @@ class EditClearenceLog extends React.Component{
           }];
 
         let hash_map = new Map();
-        if (data.CLEARENCE_TABLE instanceof Array) {
-            data.CLEARENCE_TABLE.map((item)=>{
+        if (data.HOLD_TABLE instanceof Array) {
+            data.HOLD_TABLE.map((item)=>{
                 let key = item.trade_date;
                 let bucket = hash_map.get(key);
                 let result_list = [];
@@ -65,8 +68,8 @@ class EditClearenceLog extends React.Component{
 
         let result_jsx = [];
         hash_map.forEach((value,key)=>{
-            let chartname = key + "清仓";
-            result_jsx.push(<EditClearenceTradeLogTable key={key} rowKey={value => value.id}  dataSource={value} chartname={chartname} columns={columns} refreshpage={this.refreshPage.bind(this)}/>);
+            let chartname = key + "持仓";
+            result_jsx.push(<EditHoldTradeLogTable key={key} rowKey={value => value.id}  dataSource={value} chartname={chartname} columns={columns} refreshpage={this.refreshPage.bind(this)}/>);
         });
         //console.log(hash_map,result_jsx);
             return (  
@@ -78,19 +81,29 @@ class EditClearenceLog extends React.Component{
     render() {     
         return (
                 <Content>
-                    修改卖出日志数据库
-                    
-                    <Query query={STOCK_CLEARENCE_TABLE_QUERY}  fetchPolicy="network-only" pollInterval={this.state.pollInterval} >
-                    {({loading,error,data})=>{
-                        if (loading) return  <LoadingBox/>;
-                        if (error) return <ErrorBox title={error.toString()} 
-                                        message={error.message} />;
-                            return ( this.returnRenderJSX(data) );
-                    }}
-                    </Query>
+                    <HoldTableMarketData interval={15000}/>
+                    <Collapse defaultActiveKey={['1','2']} >
+                        <Panel header="待清仓列表" key="1">
+                            <NeedToClearenceTable stoploss_rate="5.0" max_hold_day="4" />
+                        </Panel>
+                        <Panel header="持仓记录" key="2">
+                            <Query query={STOCK_HOLD_TABLE_QUERY}  fetchPolicy="network-only" pollInterval={this.state.pollInterval} >
+                                {({loading,error,data})=>{
+                                    if (loading) return  <LoadingBox/>;
+                                    if (error) return <ErrorBox title={error.toString()} 
+                                            message={error.message} />;
+                                    return ( this.returnRenderJSX(data) );
+                                }}
+                            </Query>
+                        </Panel>
+                    </Collapse>
+
+
+
+                  
                 </Content>
         );
     } 
 }
 
-export default EditClearenceLog;
+export default EditHoldLog;

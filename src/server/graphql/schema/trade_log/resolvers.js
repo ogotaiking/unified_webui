@@ -81,7 +81,7 @@ const TRADING_DAY = async(root,args,ctx,info) => {
 }
 
 const REMOVE_HOLD_TABLE_ITEM = async(root, args, ctx, info) =>{
-    if ( ctx.state.user.privilegeLevel > 20 ) {
+    if ( ctx.state.user.privilegeLevel > 10 ) {
       let result = await HoldTableDB.deleteMany({id: args.id});
       return { NUMBER : result.n, 
         OK: result.ok };
@@ -96,7 +96,7 @@ const REMOVE_HOLD_TABLE_ITEM = async(root, args, ctx, info) =>{
 };
 
 const REMOVE_CLEARENCE_TABLE_ITEM = async(root, args, ctx, info) =>{
-  if ( ctx.state.user.privilegeLevel > 20 ) {
+  if ( ctx.state.user.privilegeLevel > 10 ) {
     let result = await ClearenceTableDB.deleteMany({id: args.id});
     return { NUMBER : result.n, 
       OK: result.ok };
