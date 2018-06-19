@@ -60,10 +60,16 @@ export default (router) => {
                         }
                     ).exec();                    
                 }
-                const peer_info = ctx.socket._peername.address + ":" + ctx.socket._peername.port;
+                let peer_info = ctx.socket._peername.address + ":" + ctx.socket._peername.port;
+                let peer_ip = ctx.socket._peername.address;
 
-                let cityinfo = CityLookup.get(ctx.socket._peername.address);
-                let asninfo = ASNLookup.get(ctx.socket._peername.address);
+                if (ServerConfig.nginx_enable) {
+                    peer_info = ctx.header['x-real-ip'] + ":" + ctx.header['x-real-port'];
+                    peer_ip = ctx.header['x-real-ip'];
+                }
+
+                let cityinfo = CityLookup.get(peer_ip);
+                let asninfo = ASNLookup.get(peer_ip);
                 
                 /* test 
                 用以下IP地址测试地址，公开的GeoLocation数据库将港澳台标记为国家

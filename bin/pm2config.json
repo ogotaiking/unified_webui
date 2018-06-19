@@ -1,0 +1,8 @@
+{
+    "apps" : [{
+      "name"        : "pt_webui",
+      "script"      : "./bin/init.js",
+      "watch"       : true,
+      "cwd"         : "."
+    }]
+  }

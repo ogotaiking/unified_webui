@@ -8,6 +8,7 @@ import {
 } from 'apollo-server-koa';
 import url from 'url';
 import { authToken,isAuthenticated } from '../../auth';
+import {ServerConfig} from '../../../../config';
 import GraphQLSchema from '../schema';
 
 const router = new koaRouter();
@@ -34,15 +35,16 @@ export default (router) => {
     );
   
     //remove iql debug tool on production
-    router.get('/graphiql',isAuthenticated(), graphiqlKoa(
-        (ctx) => ({
-            endpointURL: '/api/graphql',
-            subscriptionsEndpoint: url.format({
-                host: ctx.request.header.host,
-                protocol: 'wss', // todo may need some code to check https:wss:ws
-                pathname: '/api/graphql_sub'
-              })
-        })
-    ));
-    
+    if (!ServerConfig.production) {
+        router.get('/graphiql',isAuthenticated(), graphiqlKoa(
+            (ctx) => ({
+                endpointURL: '/api/graphql',
+                subscriptionsEndpoint: url.format({
+                    host: ctx.request.header.host,
+                    protocol: 'wss', // todo may need some code to check https:wss:ws
+                    pathname: '/api/graphql_sub'
+                  })
+            })
+        ));
+    }
 };

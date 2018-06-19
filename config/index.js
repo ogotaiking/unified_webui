@@ -1,16 +1,17 @@
 'use strict';
+import { db_username,db_password,Server_IP,SessionKeys,cookie_key} from './auth/config';
 
 export const ServerConfig = {
     'port': 3000,
     'app_timeout': 5000,
     'allow_sign' : true,
+    'nginx_enable': false,
+    'production' : false,
 };
-
-
 
 export const SessionConfig = {
     'Options': {
-        key: 'zzz:sess',
+        key: cookie_key,
         /** (string) cookie key (default is koa:sess) */
         /** (number || 'session') maxAge in ms (default is 1 days) */
         /** 'session' will result in a cookie that expires when session/browser is closed */
@@ -29,30 +30,40 @@ export const SessionConfig = {
         sameSite: 'strict',
         secure: true,
     },
-    'SessionKeys': ['my-secret-key','security_key2'],
+    'SessionKeys': SessionKeys,
     'SessionRedisOption': {
         host: '127.0.0.1',
         port: 6379,
         db: 'session_db',
-        /** password: 'password' */
+        password: db_password 
     }
 
 };
+
 export const TokenMaxage = 24 * 60 * 60 *3;
+
 
 export const RateLimitDB = {
     host: '127.0.0.1',
     port: 6379,
     db: 1,
+    password: db_password 
 };
 
-export const MongodbURI = 'mongodb://localhost/webdb';
+
+let MongodbURI_str = 'mongodb://' + db_username + ':' + db_password + '@localhost/webdb';
+if ( db_username === '' ) {
+    MongodbURI_str = 'mongodb://localhost/webdb';
+} 
+
+export const MongodbURI = MongodbURI_str;
+
 
 export const CorsConfig = () => {
     const accessControlMaxAge = '1200';
   
     const allowedOrigins = [
-      'https://0.0.0.0'
+      'https://' + Server_IP
     ];
   
     const accessControlAllowMethods = [

@@ -1,4 +1,9 @@
-// TODO - This is secret code for token sign.
+export const db_username = '';
+export const db_password = '';
+export const Server_IP = '0.0.0.0';
+export const SessionKeys = ['my-secret-key','security_key2'];
+export const cookie_key = 'abc:sess';
+
 export const JWTSignKey = {
     secret: 'my-secret-code',
 };
