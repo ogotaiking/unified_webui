@@ -17,7 +17,8 @@ class HoldTable extends React.Component {
       let shouldChange = true;
       let result = new Map();
       let result_clearence = new Map();
-      let DateNow = new Date();
+      let TempDateNow = new Date();
+      let DateNow = new Date(Math.floor(TempDateNow / 86400000) * 86400000);
       nextProp.hold_data.map((hold_item) => {
         if (!nextProp.market_data.get(hold_item.symbol)) {
           //当未完全获取行情时，不计算不更新
@@ -35,11 +36,10 @@ class HoldTable extends React.Component {
           if (nextProp.clearence_mode) {
             const TRADING_DAY_ARRAY = nextProp.trading_day;
             const MAX_HOLD_DATE = new Date(TRADING_DAY_ARRAY[0]);
-            const CURRENT_TRADING_DAY = new Date(TRADING_DAY_ARRAY[TRADING_DAY_ARRAY.length-1]);
 
             let holdDate = new Date(hold_item.trade_date);
             let MAX_HOLD_DAY_VALIDATE =  MAX_HOLD_DATE >= holdDate;
-            let T_PLUS_ONE_DAY_VALIDATE = CURRENT_TRADING_DAY > holdDate;
+            let T_PLUS_ONE_DAY_VALIDATE = ( DateNow - holdDate) > 86400000;
             let STOP_LOSS_VALIDATE = new_item.cum_pctchange < -parseFloat(nextProp.stoploss_rate);
 
             //T+1且大于止损线，或者大于最大持仓天数
@@ -76,7 +76,8 @@ class HoldTable extends React.Component {
       //hold_table已经完成更新，则只检查新传入的market_data时间
       let notChangeFlag = true;
       let result_clearence = new Map();
-      let DateNow = new Date();
+      let TempDateNow = new Date();
+      let DateNow = new Date(Math.floor(TempDateNow / 86400000) * 86400000);
       let result = prevState.hold_table;
       nextProp.hold_data.map((hold_item) => {
         const id = hold_item.symbol;
@@ -109,11 +110,11 @@ class HoldTable extends React.Component {
           
           const TRADING_DAY_ARRAY = nextProp.trading_day;
           const MAX_HOLD_DATE = new Date(TRADING_DAY_ARRAY[0]);
-          const CURRENT_TRADING_DAY = new Date(TRADING_DAY_ARRAY[TRADING_DAY_ARRAY.length-1]);
 
           let holdDate = new Date(hold_item.trade_date);
           let MAX_HOLD_DAY_VALIDATE =  MAX_HOLD_DATE >= holdDate;
-          let T_PLUS_ONE_DAY_VALIDATE = CURRENT_TRADING_DAY > holdDate;
+          //console.log(holdDate,CURRENT_TRADING_DAY);
+          let T_PLUS_ONE_DAY_VALIDATE = ( DateNow - holdDate) > 86400000;
           let STOP_LOSS_VALIDATE = new_item.cum_pctchange < -parseFloat(nextProp.stoploss_rate);
 
           //T+1且大于止损线，或者大于最大持仓天数

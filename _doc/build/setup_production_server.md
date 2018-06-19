@@ -273,6 +273,11 @@ npm install
 sudo chown -R $USER:$(id -gn $USER) /home/<$user>/.config
 ```
 
+## Start Web
+```bash
+cd /opt/webui/unified_webui/
+npm run pm2_start / stop /monit /log ... etc ...
+```
 
 ## 其它
 

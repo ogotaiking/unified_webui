@@ -66,7 +66,22 @@ const CLEARENCE_TABLE = async (root, args, ctx, info) =>{
 };
 
 
+const TRADING_DAY = async(root,args,ctx,info) => {
+  const url = 'http://img1.money.126.net/data/hs/kline/day/times/0000001.json';
+  const response = await axios.get(url);
+  let data = response.data;
+  const date_array = data.times;
+  const date_array_length = date_array.length;
+  let result = [];
+  for (let idx = date_array_length-args.num; idx< date_array_length; idx++ ){
+    let date_str = date_array[idx];
+    result.push(date_str.substr(0,4)+"-"+date_str.substr(4,2)+"-"+date_str.substr(6,2));
+  }
+  //console.log(result);
+  return result;
+};
 
+/*新浪行情中没有当日的数据
 const TRADING_DAY = async(root,args,ctx,info) => {
   const url = 'http://money.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_MarketData.getKLineData?symbol=sh000001&scale=240&ma=no&datalen=' + args.num.toString();
   const response = await axios.get(url);
@@ -79,6 +94,7 @@ const TRADING_DAY = async(root,args,ctx,info) => {
   
   return result;
 }
+*/
 
 const REMOVE_HOLD_TABLE_ITEM = async(root, args, ctx, info) =>{
     if ( ctx.state.user.privilegeLevel > 10 ) {
