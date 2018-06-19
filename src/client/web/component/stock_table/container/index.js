@@ -1,5 +1,6 @@
 import React from 'react';
 import Table from '../table/stock_table';
+import { Responsive_Column_Filter } from '../../util/responsive_view';
 
 class IndexTable extends React.Component {
     constructor(props){
@@ -22,26 +23,30 @@ class IndexTable extends React.Component {
 
   render() {
     const DataToRender = this._DataToRender();
-    const columns = [{
+    const Display_Columns = [{
         title: '指数名称',
         dataIndex: 'stockname',
+        display_priority: 1,        
         style:{
             width: '20%'
         }
       }, {
         title: '当前点位',
         dataIndex: 'current',
+        display_priority: 1,
         style:{
             width: '20%'
         }
       }, {
         title: '涨跌',
+        display_priority: 2,
         dataIndex: 'pricechange',
         style:{
             width: '20%'
         }        
       }, {
         title: '涨跌幅',
+        display_priority: 1,
         dataIndex: 'pctchange',
         style:{
             width: '15%'
@@ -49,10 +54,12 @@ class IndexTable extends React.Component {
       }, {
         title: '成交金额（亿）',
         dataIndex: 'volm',
+        display_priority: 2,
         style:{
             width: '25%'
         }        
       }];
+    let columns = Responsive_Column_Filter(Display_Columns);
 
     return (
        <Table chartname={this.props.chartname} 

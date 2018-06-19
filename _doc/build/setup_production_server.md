@@ -281,7 +281,7 @@ npm run pm2_start / stop /monit /log ... etc ...
 
 ## 其它
 
-### 修改用户权限，主要是初始状态下创建管理员账户
+### 修改用户权限,主要是初始状态下创建管理员账户
 
 ```bash
 mongo mongouri

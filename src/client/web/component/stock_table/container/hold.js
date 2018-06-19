@@ -1,5 +1,7 @@
 import React from 'react';
 import Table from '../table/hold_table';
+import { Responsive_Column_Filter } from '../../util/responsive_view';
+
 
 class HoldTable extends React.Component {
   constructor(props) {
@@ -176,74 +178,95 @@ class HoldTable extends React.Component {
       });
       sum_ratio = (sum_earn / sum_money * 100).toFixed(3);
     }
-    let columns = [{
+    let Display_Columns = [{
       title: '股票代码',
       dataIndex: 'id',
+      display_priority: 1,
     }, {
       title: '股票名称',
       dataIndex: 'stockname',
+      display_priority: 1,
     }, {
-      title: '持仓数量',
+      title: '持仓量',
       dataIndex: 'volume',
+      display_priority: 1,
     }, {
-      title: '累计盈亏%',
+      title: '累计%',
       dataIndex: 'cum_pctchange',
+      display_priority: 1,
     }, {
       title: '成本价',
       dataIndex: 'hold_price',
     }, {
       title: '现价',
       dataIndex: 'current',
+      display_priority: 1,
     }, {
       title: '涨跌',
       dataIndex: 'pricechange',
+      display_priority: 2,
     }, {
-      title: '今日涨跌幅',
+      title: '今日%',
       dataIndex: 'pctchange',
+      display_priority: 1,
     }, {
       title: '最高',
       dataIndex: 'high',
+      display_priority: 2,
     }, {
       title: '最低',
       dataIndex: 'low',
+      display_priority: 2,
     }, {
       title: '累计盈亏',
       dataIndex: 'earn',
+      display_priority: 2,
     }, {
       title: 'Time',
       dataIndex: 'currenttime',
+      display_priority: 3,
     }];
     if (this.props.clearence_mode) {
       render_mode = "simple";
       columns = [{
         title: '股票代码',
         dataIndex: 'id',
+        display_priority: 1,
       }, {
         title: '股票名称',
         dataIndex: 'stockname',
+        display_priority: 1,
       }, {
         title: '需卖出数量',
         dataIndex: 'volume',
+        display_priority: 1,
       }, {
         title: '现价',
         dataIndex: 'current',
+        display_priority: 1,
       }, {
         title: '今日涨跌幅',
         dataIndex: 'pctchange',
+        display_priority: 1,
       }, {
         title: '买入价',
         dataIndex: 'buy',
+        display_priority: 3,
       }, {
         title: '卖出价',
         dataIndex: 'sell',
+        display_priority: 3,
       }, {
         title: '累计盈亏',
         dataIndex: 'earn',
+        display_priority: 2,
       }, {
         title: '交易详细记录',
+        display_priority: 2,
         dataIndex:'trade_detail',
       }];
     }
+    let columns = Responsive_Column_Filter(Display_Columns);
 
     return ( <Table chartname = {this.props.chartname}
       rowKey = {DataToRender => DataToRender.id}

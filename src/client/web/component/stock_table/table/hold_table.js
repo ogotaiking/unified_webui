@@ -108,9 +108,9 @@ class Table extends React.PureComponent{
             <tr>
                 <td>本期持仓</td>
                 <td>{this.props.sum_money}</td>
-                <td>本期盈亏%</td>
+                <td>盈亏%</td>
                 <td>{this.props.sum_ratio}</td>
-                <td>本期盈亏</td>
+                <td>盈亏</td>
                 <td>{this.props.sum_earn}</td>
             </tr>
         );
