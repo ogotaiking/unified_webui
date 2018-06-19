@@ -14,7 +14,7 @@ class ClientLayout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      collapsed: true,
+      collapsed: false,
     };
   }
   
@@ -24,7 +24,7 @@ class ClientLayout extends React.Component {
   }
   render() {
     //console.log(window.screen.width);
-    if (window.screen.width < 1100) {
+    if (window.innerWidth < 1200) {
       return (
         <TransitionAnimation>
         <Layout style={{ minHeight: '100vh' }}>

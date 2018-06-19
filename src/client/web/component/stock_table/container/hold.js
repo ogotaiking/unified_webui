@@ -228,7 +228,7 @@ class HoldTable extends React.Component {
     }];
     if (this.props.clearence_mode) {
       render_mode = "simple";
-      columns = [{
+      Display_Columns = [{
         title: '股票代码',
         dataIndex: 'id',
         display_priority: 1,
