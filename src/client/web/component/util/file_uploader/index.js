@@ -30,9 +30,9 @@ class FileUploader extends  React.Component {
       return (
           <Dragger {...props_list}>
               <p className="ant-upload-drag-icon">
-                <Icon type="inbox" />
+                <Icon type={this.props.iconname} />
               </p>
-              <p className="ant-upload-text">Click or drag file to this area to upload</p>
+              <p className="ant-upload-text">{this.props.title}</p>
               <p className="ant-upload-hint">Support for a single or bulk upload.</p>
           </Dragger>
         );

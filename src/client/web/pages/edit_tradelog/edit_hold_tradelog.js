@@ -54,7 +54,15 @@ class EditHoldLog extends React.Component{
 
         let hash_map = new Map();
         if (data.HOLD_TABLE instanceof Array) {
-            data.HOLD_TABLE.map((item)=>{
+             //sort by date
+             let temp_data = [...data.HOLD_TABLE];
+             temp_data.sort(function(a,b){ 
+                 const aT = new Date(a.trade_date); 
+                 const bT = new Date(b.trade_date);
+                 return aT-bT;
+             });
+             
+            temp_data.map((item)=>{
                 let key = item.trade_date;
                 let bucket = hash_map.get(key);
                 let result_list = [];

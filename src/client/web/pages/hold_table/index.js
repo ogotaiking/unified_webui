@@ -11,7 +11,7 @@ import IndexTable from '../../component/stock_table/container/index';
 import HoldTableMarketData from './component/hold_table_md';
 import HoldTableContainer from './component/hold_table';
 import NeedToClearenceTable from './component/need_clearence_table';
-
+import { check_device_type } from '../../component/util/responsive_view';
 
 /*
 
@@ -58,6 +58,25 @@ class HoldTablePage extends React.Component{
         const global_index= ["int_dji","int_nasdaq","int_sp500","int_nikkei","int_hangseng","int_ftse"];
         let index_list = [...china_index,...global_index];
 
+        const device_type = check_device_type();
+        let INDEX_JSX = (
+            <table style={{width: "100%"}}>
+                <tbody>
+                    <tr>
+                        <td><IndexTable symbol_list={china_index}/></td>
+                        <td><IndexTable symbol_list={global_index}/></td> 
+                    </tr>
+                </tbody>
+            </table>  
+        );
+        if (device_type == 1) {
+             INDEX_JSX = (
+                <div>
+                    <IndexTable symbol_list={china_index}/>
+                    <IndexTable symbol_list={global_index}/>
+                </div>
+             );
+        }
     return (
         <Content>
             <HoldTableMarketData interval={15000}/>
@@ -67,14 +86,7 @@ class HoldTablePage extends React.Component{
                 <NeedToClearenceTable stoploss_rate="5.0" max_hold_day="4" />
                 指数行情
                 <StockIdxSubWrap symbol_list={index_list}>
-                    <table style={{width: "100%"}}>
-                        <tbody>
-                            <tr>
-                                <td><IndexTable symbol_list={china_index}/></td>
-                                <td><IndexTable symbol_list={global_index}/></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                {INDEX_JSX}  
                 </StockIdxSubWrap>     
                 <StockIdxData key="china_index" symbol_list={china_index}  interval={15000}/>   
                 <StockIdxData key="global_index" symbol_list={global_index}  interval={15000}/>            
