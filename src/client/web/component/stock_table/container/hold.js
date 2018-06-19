@@ -243,7 +243,7 @@ class HoldTable extends React.Component {
       }, {
         title: '现价',
         dataIndex: 'current',
-        display_priority: 1,
+        display_priority: 2,
       }, {
         title: '今日涨跌幅',
         dataIndex: 'pctchange',
@@ -262,7 +262,7 @@ class HoldTable extends React.Component {
         display_priority: 2,
       }, {
         title: '交易详细记录',
-        display_priority: 2,
+        display_priority: 1,
         dataIndex:'trade_detail',
       }];
     }
