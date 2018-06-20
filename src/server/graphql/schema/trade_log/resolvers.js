@@ -10,12 +10,12 @@ const CHANNEL = "TRADE_LOG_DATA";
 let stock_market_data = {};
 
 const HOLD_TABLE = async (root, args, ctx, info) =>{
-    return await HoldTableDB.find({});
+    return await HoldTableDB.find({}).sort({"trade_date":1,"symbol":1});
 };
 
 const HOLD_TABLE_SUMMARY = async(root, args, ctx, info) =>{
   let trade_map = new Map();
-  let hold_table = await HoldTableDB.find({}).sort({"trade_day":-1});
+  let hold_table = await HoldTableDB.find({}).sort({"trade_date":1,"symbol":1});
   hold_table.map((data)=>{
     let item = trade_map.get(data.symbol);
     if (!item) {
@@ -49,7 +49,7 @@ const HOLD_STOCK_LIST = async(root, args, ctx, info) =>{
 
 const CLEARENCE_STOCK_LIST = async(root, args, ctx, info) =>{
   let stock_list = new Map();
-  let hold_table = await ClearenceTableDB.find({}).sort({"trade_day":-1});
+  let hold_table = await ClearenceTableDB.find({});
   hold_table.map((data)=>{
     let item = stock_list.get(data.symbol);
     if (!item) {
@@ -62,7 +62,7 @@ const CLEARENCE_STOCK_LIST = async(root, args, ctx, info) =>{
 
 
 const CLEARENCE_TABLE = async (root, args, ctx, info) =>{
-  return await ClearenceTableDB.find({});
+  return await ClearenceTableDB.find({}).sort({"trade_date":1,"symbol":1});
 };
 
 

@@ -51,15 +51,16 @@ class EditClearenceLog extends React.Component{
 
         let hash_map = new Map();
         if (data.CLEARENCE_TABLE instanceof Array) {
-            //sort by date
+            /*
             let temp_data = [...data.CLEARENCE_TABLE];
             temp_data.sort(function(a,b){ 
                 const aT = new Date(a.trade_date); 
                 const bT = new Date(b.trade_date);
                 return aT-bT;
             });
+            */
 
-            temp_data.map((item)=>{
+            data.CLEARENCE_TABLE.map((item)=>{
                 let key = item.trade_date;
                 let bucket = hash_map.get(key);
                 let result_list = [];

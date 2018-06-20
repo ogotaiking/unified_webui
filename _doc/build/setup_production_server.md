@@ -175,7 +175,7 @@ sudo vi /etc/nginx/sites-enabled/default
         ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
         ssl_ciphers AESGCM:ALL:!DH:!EXPORT:!RC4:+HIGH:!MEDIUM:!LOW:!aNULL:!eNULL;
         ssl_prefer_server_ciphers  on;
-        access_log /var/log/nginx/test.log;
+        access_log /var/log/nginx/pt_web.log combined;
         location / {
             proxy_set_header Host             $host;
             proxy_set_header X-Real-IP        $remote_addr;
