@@ -9,8 +9,7 @@ export default (router) => {
         if ( 
             request_url.match(/^\/api/) || 
             request_url.match(/^\/auth/) ||
-            request_url.match(/^\/socket/) ||
-            request_url.match(/^\/img/) 
+            request_url.match(/^\/socket/)
         ){
             await next();
         } else {
