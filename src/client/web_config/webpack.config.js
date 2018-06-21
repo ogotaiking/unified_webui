@@ -5,6 +5,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 const fs = require('fs');
 
 
@@ -143,7 +144,7 @@ module.exports = {
         // 处理html文件 
         new HtmlWebpackPlugin({
             template: './web/index.html',
-            favicon: './web/favicon.ico'
+            //favicon: './web/favicon.ico'
         }),
         // 独立css文件
         new ExtractTextWebpackPlugin({
@@ -154,7 +155,30 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
         new UglifyjsWebpackPlugin({
             parallel: true,
-        })
+        }),
+        new FaviconsWebpackPlugin({
+            logo: './web/favicon.png',
+            prefix: 'img/icons/',
+            emitStats: false,
+            statsFilename: 'iconstats-[hash].json',
+            persistentCache: true,
+            inject: true,
+
+            background: '#fff',
+            title: 'PeentOS',
+            icons: {
+              android: true,
+              appleIcon: true,
+              appleStartup: false,
+              coast: false,
+              favicons: true,
+              firefox: true,
+              opengraph: false,
+              twitter: false,
+              yandex: false,
+              windows: false
+            }
+          })
     ],
     devServer: {
         host: '0.0.0.0',

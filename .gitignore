@@ -2,6 +2,7 @@ node_modules
 manifest.json
 dist/js
 dist/css
+dist/img/icons
 
 dist/.DS_Store
 .DS_Store

@@ -27,6 +27,7 @@
     "babel-plugin-import": "^1.7.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
+    "favicons-webpack-plugin": "0.0.9",
     "fingerprintjs2": "^1.8.0",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
