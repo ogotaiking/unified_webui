@@ -3,3 +3,5 @@ manifest.json
 dist/js
 dist/css
 
+dist/.DS_Store
+.DS_Store
