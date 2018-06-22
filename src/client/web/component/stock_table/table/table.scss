@@ -26,17 +26,32 @@ $row_height : 2.4rem;
     width: 100%;
     border: 1px solid $dark_bg_color;
     border-radius: 10px;
-    border-collapse: collapse;
     font-style: normal "Segoe UI","Hiragino Sans GB","Microsoft YaHei",sans-serif;
     font-size: $content_font_size ;
+    border-collapse: collapse;    
     text-align: center;
     margin-bottom: 20px;
+
+    tr:first-child th:first-child {
+        border-top-left-radius: 5px;
+    }
+    tr:first-child th:last-child {
+        border-top-right-radius: 5px;
+    }
+    tr:last-child td:first-child {
+        border-bottom-left-radius: 5px;
+    }
+    tr:last-child td:last-child {
+        border-bottom-right-radius: 5px;
+    }
     thead {
         background:$th_bg_color;
         padding: 1px;
         font-style: bold;
         font-size:  $header_font_size ;
         color: $th_font_color;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
     }
     thead>tr>th {
         border-left: 1px solid $dark_bg_color;
