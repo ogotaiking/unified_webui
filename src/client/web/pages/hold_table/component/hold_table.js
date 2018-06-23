@@ -2,7 +2,7 @@ import React   from 'react';
 import { Query } from 'react-apollo';
 import {CSVLink} from 'react-csv';
 import { Button} from 'antd';
-
+import { MARKET_DATA } from '../../../config';
 import { STOCK_HOLD_TABLE_QUERY } from '../../../../_service/stock/graphql/holdtable';
 import StockSubWrap from '../../../../_service/sina_market_data/md_sub/stock';
 import HoldTable from '../../../component/stock_table/container/hold';
@@ -48,14 +48,14 @@ class HoldTableContainer extends React.Component{
             <CSVLink data={data.HOLD_TABLE}filename={"holdtable.csv"} >
                 <Button type="primary" icon="download" size="small" style={{marginBottom: '20px'}} >下载持仓表 </Button>
             </CSVLink>
-            <StockSubWrap symbol_list={data.HOLD_STOCK_LIST} >
+            <StockSubWrap symbol_list={data.HOLD_STOCK_LIST} pollInterval={MARKET_DATA.query_pollInterval} >
                 {result_jsx.map((item)=>{return item;})}
             </StockSubWrap>
             </div>);
     }
     render() {
         return (
-             <Query query={STOCK_HOLD_TABLE_QUERY}  fetchPolicy="network-only">
+             <Query query={STOCK_HOLD_TABLE_QUERY}  fetchPolicy="network-only" >
                 {({loading,error,data})=>{
                     if (loading) return  <LoadingBox/>;
                     if (error) return <ErrorBox title={error.toString()} 

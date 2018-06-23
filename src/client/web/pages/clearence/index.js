@@ -5,6 +5,7 @@ import Content from '../../component/layout/content';
 import HoldTableMarketData from '../hold_table/component/hold_table_md';
 import NeedToClearenceTable from '../hold_table/component/need_clearence_table';
 import ClearneceLogTable from './clearence_log_container';  
+import {MARKET_DATA } from '../../config';
 
 /*节省页面空间， 不需要折叠
 import { Collapse } from 'antd';
@@ -27,7 +28,7 @@ class ClearenceTablePage extends React.Component{
 
 
 
-                     <HoldTableMarketData interval={15000}/>
+                     <HoldTableMarketData interval={MARKET_DATA.agent_refreshInterval}/>
                      待清仓列表
                      <NeedToClearenceTable stoploss_rate="5.0" max_hold_day="4" />
                      已卖出交易记录

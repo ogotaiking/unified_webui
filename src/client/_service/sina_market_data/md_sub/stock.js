@@ -81,11 +81,14 @@ export default graphql(STOCK_DATA_QUERY, {
   name: 'stockQuery',
   options: ownProps => {
     const symbol_list = ownProps.symbol_list;
+    const pollInterval = ownProps.pollInterval;
     return {
       variables: {
         symbol_list
      },
+     pollInterval:pollInterval
     };
    },
+   
   //cachePolicy: { query: true, data: false } 
 })(StockMDSubWrapper);
