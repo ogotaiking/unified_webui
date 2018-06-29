@@ -42,8 +42,11 @@ const UPDATE_STOCK_DATA = (root, { stock }) => {
   return stock.map((item)=>{
     let stock_symbol = item.id;
     stock_market_data[stock_symbol] = item;
+    //testing code for refresh...
+    //let current_Time = new Date();
+    //item.currenttime = current_Time.toTimeString();
     pubsub.publish(INDEX_CHANNEL+"_"+stock_symbol,item);
-    //return item;
+    return item;
   });
   };
 

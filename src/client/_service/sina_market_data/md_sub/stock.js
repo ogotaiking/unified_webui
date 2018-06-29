@@ -19,7 +19,25 @@ class StockMDSubWrapper extends React.Component {
             });
             return { market_data: result};
         } else {
-            return null;
+            let updateflag = false;
+            let result = prevState.market_data;
+            
+            if (nextProp.stockQuery.STOCK_DATA) {
+                nextProp.stockQuery.STOCK_DATA.map((item)=> {
+                    if (item.currenttime != result.get(item.id).currenttime) {
+                        //console.log('Item Change:',item,result.get(item.id));
+                        updateflag = true;
+                        result.set(item.id,item);
+                    }
+                });
+            }           
+            
+            if (updateflag) {
+                return { market_data: result};
+            } else {
+                return null;
+            }
+            
         }
     }    
 

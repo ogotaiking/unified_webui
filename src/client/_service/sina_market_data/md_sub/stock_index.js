@@ -19,8 +19,27 @@ class StockIndexSubWrapper extends React.Component {
             });
             return { market_data: result};
         } else {
-            return null;
+            let updateflag = false;
+            let result = prevState.market_data;
+            
+            if (nextProp.stockQuery.STOCK_INDEX_DATA) {
+                nextProp.stockQuery.STOCK_INDEX_DATA.map((item)=> {
+                    if (item.current !== result.get(item.id).current ) {
+                        //console.log('Item Change:',item,result.get(item.id));
+                        updateflag = true;
+                        result.set(item.id,item);
+                    }
+                });
+            }           
+            
+            if (updateflag) {
+                return { market_data: result};
+            } else {
+                return null;
+            }
+            
         }
+    
     }    
 
     componentDidMount(){
@@ -51,7 +70,7 @@ class StockIndexSubWrapper extends React.Component {
                 //update return
                 let prev_w_filter = previous.STOCK_INDEX_DATA.filter((prev_item)=>{ return this._filter_by_symbol(prev_item,new_data.id); } );
                 let new_Return = Object.assign({},previous,{
-                    STOCK_DATA: [...prev_w_filter, new_data]
+                    STOCK_INDEX_DATA: [...prev_w_filter, new_data]
                 });
                 //console.log("UPDATE-QUERY",previous,new_Return);
                 return new_Return;

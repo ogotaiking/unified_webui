@@ -164,7 +164,7 @@ module.exports = {
             persistentCache: true,
             inject: true,
 
-            background: '#fff',
+            background: '#999',
             title: 'PeentOS',
             icons: {
               android: true,
