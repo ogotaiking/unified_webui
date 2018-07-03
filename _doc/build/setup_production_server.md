@@ -160,11 +160,14 @@ sudo openssl x509 -req -sha256 -days 9365 -in server.csr -signkey server.key -ou
 sudo vi /etc/nginx/sites-enabled/default
 
 >> Append <<
-
-
     upstream nodejs {
     server 127.0.0.1:3000;
         keepalive 64;
+    }
+    server {
+        listen 80;
+        server_name www.foo.org  foo.org;
+        rewrite ^(.*) https://$server_name$1 permanent;
     }
     server {
         listen 443 ssl;
@@ -175,17 +178,18 @@ sudo vi /etc/nginx/sites-enabled/default
         ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
         ssl_ciphers AESGCM:ALL:!DH:!EXPORT:!RC4:+HIGH:!MEDIUM:!LOW:!aNULL:!eNULL;
         ssl_prefer_server_ciphers  on;
-        access_log /var/log/nginx/pt_web.log combined;
+        access_log /var/log/nginx/pt_web.log combined ;
         location / {
-            proxy_set_header Host             $host;
             proxy_set_header X-Real-IP        $remote_addr;
-            proxy_set_header X-Real-Port      $remote_port;
+            proxy_set_header X-Real-PORT      $remote_port;
             proxy_set_header X-Forwarded-For  $remote_addr;
-            
+            proxy_set_header Host             $host;
+
             proxy_http_version 1.1;
             proxy_pass      https://nodejs;
             proxy_set_header Upgrade $http_upgrade;
             proxy_set_header Connection "upgrade";
+            proxy_cache_bypass $http_upgrade;
         }
     }
 ```
