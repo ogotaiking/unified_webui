@@ -67,6 +67,12 @@ class StockMDSubWrapper extends React.Component {
                 this.setState({market_data: result_map});
 
                 //update return
+                if (!previous.STOCK_DATA) {
+                    let ReturnData = Object.assign({},previous,{
+                        STOCK_DATA: [ new_data]
+                    });
+                    return ReturnData;
+                } 
                 let prev_w_filter = previous.STOCK_DATA.filter((prev_item)=>{ return this._filter_by_symbol(prev_item,new_data.id); } );
                 let new_Return = Object.assign({},previous,{
                     STOCK_DATA: [...prev_w_filter, new_data]
