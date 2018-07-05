@@ -41,7 +41,7 @@ class HoldTable extends React.Component {
 
             let holdDate = new Date(hold_item.trade_date);
             let MAX_HOLD_DAY_VALIDATE =  MAX_HOLD_DATE >= holdDate;
-            let T_PLUS_ONE_DAY_VALIDATE = ( DateNow - holdDate) > 86400000;
+            let T_PLUS_ONE_DAY_VALIDATE = ( DateNow - holdDate) >= 86400000;
             let STOP_LOSS_VALIDATE = new_item.cum_pctchange < -parseFloat(nextProp.stoploss_rate);
 
             //T+1且大于止损线，或者大于最大持仓天数
