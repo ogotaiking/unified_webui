@@ -24,10 +24,11 @@ class StockMDSubWrapper extends React.Component {
             
             if (nextProp.stockQuery.STOCK_DATA) {
                 nextProp.stockQuery.STOCK_DATA.map((item)=> {
-                    if (item.currenttime != result.get(item.id).currenttime) {
-                        //console.log('Item Change:',item,result.get(item.id));
-                        updateflag = true;
-                        result.set(item.id,item);
+                    if ((item.currenttime) && (result.get(item.id))) {
+                        if (item.currenttime != result.get(item.id).currenttime) {
+                            updateflag = true;
+                            result.set(item.id,item);
+                        }
                     }
                 });
             }           
