@@ -42,10 +42,10 @@ class Table extends React.PureComponent{
             }      
         } else if (render_mode == "colored") {
             switch(true) {
-                case ((current_pctchange > 9.3) && ( cum_pctchange > -5.0)): //涨停标注放宽并只对当日变动计算，而其它标注为整体盈亏和止损
+                case ((current_pctchange > 9.5) && ( cum_pctchange > -5.0)): //涨停标注放宽并只对当日变动计算，而其它标注为整体盈亏和止损
                     styleclass = "up_stop";
                     break;
-                case ((cum_pctchange > 0.0) && (cum_pctchange<=9.5)):
+                case ((cum_pctchange > 0.0) && (current_pctchange<=9.5)):
                     styleclass = "up";
                     break;
                 case ((cum_pctchange > -4.0) && (cum_pctchange < 0)):
