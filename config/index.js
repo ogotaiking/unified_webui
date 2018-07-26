@@ -16,7 +16,7 @@ export const SessionConfig = {
         /** (number || 'session') maxAge in ms (default is 1 days) */
         /** 'session' will result in a cookie that expires when session/browser is closed */
         /** Warning: If a session cookie is stolen, this cookie will never expire */
-        maxAge: 24 * 60 * 60 * 1000,
+        maxAge: 25920000000, /** 3 *24 * 60 * 60 * 1000, */
         overwrite: true,
         /** (boolean) can overwrite or not (default true) */
         httpOnly: true,
