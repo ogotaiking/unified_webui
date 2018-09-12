@@ -38,9 +38,11 @@ class HoldTable extends React.Component {
           if (nextProp.clearence_mode) {
             const TRADING_DAY_ARRAY = nextProp.trading_day;
             const MAX_HOLD_DATE = new Date(TRADING_DAY_ARRAY[0]);
-
             let holdDate = new Date(hold_item.trade_date);
+            
+
             let MAX_HOLD_DAY_VALIDATE =  MAX_HOLD_DATE >= holdDate;
+            //console.log(TRADING_DAY_ARRAY[0],MAX_HOLD_DATE,hold_item.trade_date,holdDate,MAX_HOLD_DAY_VALIDATE);
             let T_PLUS_ONE_DAY_VALIDATE = ( DateNow - holdDate) >= 86400000;
             let STOP_LOSS_VALIDATE = new_item.cum_pctchange < -parseFloat(nextProp.stoploss_rate);
 
@@ -176,7 +178,10 @@ class HoldTable extends React.Component {
         sum_money = sum_money + parseFloat(item.total_money);
         sum_earn = sum_earn + parseFloat(item.earn);
       });
+
       sum_ratio = (sum_earn / sum_money * 100).toFixed(3);
+      sum_money = sum_money.toFixed(1);
+      sum_earn = sum_earn.toFixed(1);
     }
     let Display_Columns = [{
       title: '股票代码',

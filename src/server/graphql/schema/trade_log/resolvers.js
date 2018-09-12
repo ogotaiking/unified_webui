@@ -8,6 +8,7 @@ import ClearenceTableDB from '../../../models/stock/clearence';
 const pubsub = new PubSub();
 const CHANNEL = "TRADE_LOG_DATA";
 let stock_market_data = {};
+let trading_day_list = [];
 
 const HOLD_TABLE = async (root, args, ctx, info) =>{
     return await HoldTableDB.find({}).sort({"trade_date":1,"symbol":1});
@@ -66,6 +67,24 @@ const CLEARENCE_TABLE = async (root, args, ctx, info) =>{
 };
 
 
+
+const TRADING_DAY = async(root,args,ctx,info) => {
+  let result = [];
+  let date_array_length = trading_day_list.length;
+  if  (date_array_length == 0 ) {
+    return ["2018-09-01"];
+  }
+  for (let idx = date_array_length-args.num; idx< date_array_length; idx++ ){
+    let date_str = trading_day_list[idx];
+    result.push(date_str);
+  }
+  //console.log(result);
+  return result;  
+};
+
+
+
+/* some times has issue here  
 const TRADING_DAY = async(root,args,ctx,info) => {
   const url = 'http://img1.money.126.net/data/hs/kline/day/times/0000001.json';
   const response = await axios.get(url);
@@ -80,6 +99,7 @@ const TRADING_DAY = async(root,args,ctx,info) => {
   //console.log(result);
   return result;
 };
+*/
 
 /*新浪行情中没有当日的数据
 const TRADING_DAY = async(root,args,ctx,info) => {
@@ -126,6 +146,12 @@ const REMOVE_CLEARENCE_TABLE_ITEM = async(root, args, ctx, info) =>{
   
 };
 
+const UPDATE_TRADING_DAY = async (root,{ tradingday }) =>{
+  //console.log(tradingday);
+  trading_day_list = tradingday;
+  return trading_day_list;
+};
+
 const resolvers = {
   Query: {
     HOLD_TABLE: HOLD_TABLE,
@@ -137,6 +163,7 @@ const resolvers = {
   },
   Mutation: {
     REMOVE_HOLD_TABLE_ITEM: REMOVE_HOLD_TABLE_ITEM,
+    UPDATE_TRADING_DAY: UPDATE_TRADING_DAY,
     REMOVE_CLEARENCE_TABLE_ITEM:REMOVE_CLEARENCE_TABLE_ITEM,
   },
   Subscription: {

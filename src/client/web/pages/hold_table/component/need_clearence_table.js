@@ -3,7 +3,7 @@ import { Query } from 'react-apollo';
 import { STOCK_NEED_CLEARENCE_TABLE_QUERY } from '../../../../_service/stock/graphql/holdtable';
 import StockSubWrap from '../../../../_service/sina_market_data/md_sub/stock';
 import HoldTable from '../../../component/stock_table/container/hold';
-
+import FetchTradingDay from '../../../../_service/sina_market_data/md_fetch_agent/trading_day';
 
 import LoadingBox from '../../../component/util/loadingbox';
 import ErrorBox from '../../../component/util/errorbox';
@@ -13,7 +13,9 @@ import { MARKET_DATA } from '../../../config';
 class NeedToClearenceTable extends React.Component{
     returnRenderJSX(data) {       
         return (  <StockSubWrap symbol_list={data.HOLD_STOCK_LIST} pollInterval={MARKET_DATA.query_pollInterval}>
+        <FetchTradingDay/>
             <HoldTable hold_data={data.HOLD_TABLE} trading_day={data.TRADING_DAY} chartname="需要卖出清算的表单" stoploss_rate={this.props.stoploss_rate} clearence_mode="true" max_hold_day={this.props.max_hold_day} />
+            
         </StockSubWrap>);
     }
     //pollInterval={GRAPHQL_CONFIG.query_pollInterval} 

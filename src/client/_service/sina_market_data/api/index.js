@@ -1,5 +1,41 @@
 import $ from 'jquery'; 
 
+export function TradingDayDataFetch(transmit) {
+    let hdr = transmit || 'https';
+    let _fetch_url = hdr + "://cq.ssajax.cn/interact/getTradedata.ashx?pic=qlpic_000001_1_6";
+    return new Promise((resolve,reject) =>{
+        $.ajax({
+            url: _fetch_url,
+            dataType: "script",
+            cache: "false",
+            type: "GET",
+            success: (data) => {
+                let result = [];
+                let trading_day = window["tradeData_qlpic_000001_1_6"]["datas"];
+                for (let idx = 0 ; idx < trading_day.length ; idx++)
+                {
+                    let a = trading_day[idx][0].split("-");
+                    if (a[1].length == 1 ) {
+                        a[1] = '0' + a[1];
+                    }
+                    if (a[2].length == 1 ) {
+                        a[2] = '0' + a[2];
+                    }
+                    let as = a[0] + "-" + a[1] + "-" + a[2];
+                    result.push(as);
+                }
+                //console.log(result);
+                resolve(result);
+            },
+            error: function (error) {
+                reject(error); 
+            }
+        });
+       });
+}
+
+
+
 export function StockMarketDataFetch(hq_list, transmit) {
     let hdr = transmit || 'https';
     let hq_str = hq_list.join(',');

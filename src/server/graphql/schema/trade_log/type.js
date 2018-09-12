@@ -45,6 +45,7 @@ type Query {
   TRADING_DAY(num: Int):[String!]!
 }
 type Mutation {
+  UPDATE_TRADING_DAY(tradingday: [String!]!): [String]
   UPDATE_HOLD_TABLE: [HOLD_TradeLog_Type!]!
   REMOVE_HOLD_TABLE_ITEM(id: [String!]!): OPERATION_LOG
   UPDATE_CLEARENCE_TABLE: [CLEARENCE_TradeLog_Type!]!
