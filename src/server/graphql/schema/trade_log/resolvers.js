@@ -67,7 +67,7 @@ const CLEARENCE_TABLE = async (root, args, ctx, info) =>{
 };
 
 
-
+/*
 const TRADING_DAY = async(root,args,ctx,info) => {
   let result = [];
   let date_array_length = trading_day_list.length;
@@ -81,7 +81,7 @@ const TRADING_DAY = async(root,args,ctx,info) => {
   //console.log(result);
   return result;  
 };
-
+*/
 
 
 /* some times has issue here  
@@ -101,20 +101,35 @@ const TRADING_DAY = async(root,args,ctx,info) => {
 };
 */
 
-/*新浪行情中没有当日的数据
+/*sina source with scale=240 does not include the T+0 Day's data, but could use 5 mins */
 const TRADING_DAY = async(root,args,ctx,info) => {
-  const url = 'http://money.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_MarketData.getKLineData?symbol=sh000001&scale=240&ma=no&datalen=' + args.num.toString();
+  let num_at_scale = args.num * 60;
+  const url = 'http://money.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_MarketData.getKLineData?symbol=sh000001&scale=5&ma=no&datalen=' + num_at_scale.toString();
   const response = await axios.get(url);
   let data = response.data;
   data = data.replace(/day/g,'"day"').replace(/open/g,'"open"').replace(/high/g,'"high"').replace(/low/g,'"low"').replace(/close/g,'"close"').replace(/volume/g,'"volume"');
   let a = JSON.parse(data);
-  let result = a.map((item)=>{ 
+  let result = [];
+  let temp_str = "";
+  for (let idx =0; idx < a.length ; idx ++) {
+      let item = a[idx];
+      let temp_arr = item.day.split(" ");
+      if (temp_arr[0] != temp_str ){
+        temp_str = temp_arr[0];
+        result.push(temp_str);
+      }
+  }
+
+  return result.slice(result.length-args.num ,result.length );
+  /*
+  let resulta = a.map((item)=>{ 
       return item.day; 
   });
-  
+
   return result;
+  */
 }
-*/
+
 
 const REMOVE_HOLD_TABLE_ITEM = async(root, args, ctx, info) =>{
     if ( ctx.state.user.privilegeLevel > 10 ) {
