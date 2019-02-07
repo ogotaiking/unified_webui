@@ -25,10 +25,10 @@
     "apollo-utilities": "^1.0.13",
     "axios": "^0.18.0",
     "babel-plugin-import": "^1.7.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
-    "favicons-webpack-plugin": "0.0.9",
-    "fingerprintjs2": "^1.8.0",
+    "fingerprintjs2": "^2.0.6",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
     "immutable": "^3.8.2",
@@ -38,17 +38,17 @@
     "react-apollo": "^2.1.4",
     "react-csv": "^1.0.14",
     "react-dom": "^16.4.0",
-    "react-native": "0.55.4",
+    "react-native": "^0.58.4",
     "react-native-device-info": "^0.21.5",
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "react-test-render": "^1.1.1",
     "redux": "^4.0.0",
     "redux-immutable": "^4.0.0",
     "redux-persist-immutable": "^4.3.1",
     "redux-thunk": "^2.3.0",
-    "socket.io": "^2.1.1"
+    "socket.io": "^2.1.1",
+    "subscriptions-transport-ws": "^0.9.15"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",
@@ -74,7 +74,7 @@
     "jest": "22.4.3",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.11.0",
     "nodemon": "^1.17.4",
     "postcss-loader": "^2.1.5",
     "react-hot-loader": "^4.3.0",
@@ -85,7 +85,7 @@
     "url-loader": "^1.0.1",
     "webpack": "^4.11.1",
     "webpack-cli": "^2.1.5",
-    "webpack-dev-server": "^3.1.4"
+    "webpack-dev-server": "^3.1.14"
   },
   "jest": {
     "preset": "react-native"
