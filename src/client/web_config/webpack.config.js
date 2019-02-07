@@ -5,7 +5,6 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 const fs = require('fs');
 
 
@@ -155,30 +154,7 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
         new UglifyjsWebpackPlugin({
             parallel: true,
-        }),
-        new FaviconsWebpackPlugin({
-            logo: './web/favicon.png',
-            prefix: 'img/icons/',
-            emitStats: false,
-            statsFilename: 'iconstats-[hash].json',
-            persistentCache: true,
-            inject: true,
-
-            background: '#999',
-            title: 'PeentOS',
-            icons: {
-              android: true,
-              appleIcon: true,
-              appleStartup: false,
-              coast: false,
-              favicons: true,
-              firefox: true,
-              opengraph: false,
-              twitter: false,
-              yandex: false,
-              windows: false
-            }
-          })
+        })
     ],
     devServer: {
         host: '0.0.0.0',
