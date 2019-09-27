@@ -4,13 +4,12 @@
   "description": "Koa2+React Admin framework",
   "main": "index.js",
   "scripts": {
-    "start": "node_modules/.bin/nodemon --ignore './src/client/' ./bin/init.js",    
+    "start": "node_modules/.bin/nodemon --ignore './src/client/' ./bin/init.js",
     "pm2_start": "pm2 start bin/pm2config.json",
     "pm2_stop": "pm2 delete pt_webui",
     "pm2_info": "pm2 info pt_webui",
     "pm2_monit": "pm2 monit pt_webui",
     "pm2_log": "pm2 log pt_webui"
-
   },
   "repository": {
     "type": "git",

@@ -2,7 +2,7 @@ let Server_IP_PORT ;
 if (process.env.NODE_ENV !== "production" ) {
     Server_IP_PORT = "192.168.200.200:8000";  //Webpack
 } else {
-    Server_IP_PORT = "192.168.200.200:3000";  //NODE.JS 
+    Server_IP_PORT = "173.39.145.55";  //NODE.JS 
 }
 
 //const HTTP_PROTOCOL = "http";   

@@ -4,9 +4,9 @@ import { db_username,db_password,Server_IP,SessionKeys,cookie_key} from './auth/
 export const ServerConfig = {
     'port': 3000,
     'app_timeout': 5000,
-    'allow_sign' : true,
-    'nginx_enable': false,
-    'production' : false,
+    'allow_sign' : false,
+    'nginx_enable': true,
+    'production' : true,
 };
 
 export const SessionConfig = {
@@ -16,7 +16,7 @@ export const SessionConfig = {
         /** (number || 'session') maxAge in ms (default is 1 days) */
         /** 'session' will result in a cookie that expires when session/browser is closed */
         /** Warning: If a session cookie is stolen, this cookie will never expire */
-        maxAge: 259200000, /** 3 *24 * 60 * 60 * 1000, */
+        maxAge: 259200000,
         overwrite: true,
         /** (boolean) can overwrite or not (default true) */
         httpOnly: true,
