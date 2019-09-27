@@ -24,10 +24,18 @@
     "apollo-link-ws": "^1.0.8",
     "apollo-utilities": "^1.0.17",
     "axios": "^0.18.0",
+<<<<<<< HEAD
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "favicons-webpack-plugin": "0.0.9",
     "fingerprintjs2": "^1.8.1",
+=======
+    "babel-plugin-import": "^1.7.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "fingerprintjs2": "^2.0.6",
+>>>>>>> 593b864790699d3bf73448badb8de2c15c361454
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
     "immutable": "^3.8.2",
@@ -36,18 +44,23 @@
     "react-addons-css-transition-group": "^15.6.2",
     "react-apollo": "^2.1.9",
     "react-csv": "^1.0.14",
+<<<<<<< HEAD
     "react-dom": "^16.4.2",
     "react-native": "0.55.4",
+=======
+    "react-dom": "^16.4.0",
+    "react-native": "^0.58.4",
+>>>>>>> 593b864790699d3bf73448badb8de2c15c361454
     "react-native-device-info": "^0.21.5",
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "react-test-render": "^1.1.1",
     "redux": "^4.0.0",
     "redux-immutable": "^4.0.0",
     "redux-persist-immutable": "^4.3.1",
     "redux-thunk": "^2.3.0",
-    "socket.io": "^2.1.1"
+    "socket.io": "^2.1.1",
+    "subscriptions-transport-ws": "^0.9.15"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.6",
@@ -73,10 +86,17 @@
     "jest": "22.4.3",
     "less": "^3.8.0",
     "less-loader": "^4.1.0",
+<<<<<<< HEAD
     "node-sass": "^4.9.2",
     "nodemon": "^1.18.3",
     "postcss-loader": "^2.1.6",
     "react-hot-loader": "^4.3.4",
+=======
+    "node-sass": "^4.11.0",
+    "nodemon": "^1.17.4",
+    "postcss-loader": "^2.1.5",
+    "react-hot-loader": "^4.3.0",
+>>>>>>> 593b864790699d3bf73448badb8de2c15c361454
     "react-test-renderer": "16.3.1",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.21.0",
@@ -84,7 +104,11 @@
     "url-loader": "^1.0.1",
     "webpack": "^4.16.3",
     "webpack-cli": "^2.1.5",
+<<<<<<< HEAD
     "webpack-dev-server": "^3.1.5"
+=======
+    "webpack-dev-server": "^3.1.14"
+>>>>>>> 593b864790699d3bf73448badb8de2c15c361454
   },
   "jest": {
     "preset": "react-native"
